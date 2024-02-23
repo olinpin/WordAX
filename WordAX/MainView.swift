@@ -29,9 +29,8 @@ struct MainView: View {
                             Text("Settings")
                         }
                 }
-                .toolbar(.visible, for: .tabBar)
-                .toolbarBackground(Color.yellow, for: .tabBar)
             }
+            
         }
         
     }
@@ -39,4 +38,5 @@ struct MainView: View {
 
 #Preview {
     MainView()
+        .environmentObject(WordAXModelView())
 }

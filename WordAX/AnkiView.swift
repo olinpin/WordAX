@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AnkiView: View {
+    @EnvironmentObject var model: WordAXModelView
     var body: some View {
         Text("This is Anki View")
     }
@@ -15,4 +16,5 @@ struct AnkiView: View {
 
 #Preview {
     AnkiView()
+        .environmentObject(WordAXModelView())
 }
