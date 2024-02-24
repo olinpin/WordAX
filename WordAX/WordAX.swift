@@ -14,7 +14,7 @@ struct WordAX {
         var description: String
         var shown: Bool
         var nextSpacedRepetitionMilestone: SpacedRepetitionMilestoneEnum?
-        var displayOn: Date?
+        var lastSeenOn: Date?
     }
     enum FrequencyEnum: Int {
         case Daily = 1
@@ -35,11 +35,21 @@ struct WordAX {
         static var allCasesSorted: [SpacedRepetitionMilestoneEnum] {
             allCases.sorted {$0.rawValue < $1.rawValue }
         }
+        
+        func getNext() -> SpacedRepetitionMilestoneEnum? {
+            let sorted = WordAX.SpacedRepetitionMilestoneEnum.allCasesSorted
+            let milestoneIndex = sorted.firstIndex(where: {$0.rawValue == self.rawValue})!
+            if milestoneIndex < WordAX.SpacedRepetitionMilestoneEnum.allCasesSorted.count {
+                return sorted[milestoneIndex + 1]
+            }
+            return nil
+        }
     }
     
     struct Settings {
         var frequency: FrequencyEnum = .Daily
         var lastShownNew: Date?
+        var dateFormatter: DateFormatter
     }
     
     private mutating func setNextSpacedRepetitionMilestone(word: Word) {
@@ -59,8 +69,10 @@ struct WordAX {
     
     init() {
         self.words = []
-        self.settings = Settings()
-        self.words.append(Word(id: 0, name: "Magnificent", description: "When something is awesome", shown: false))
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/mm/YYYY"
+        self.settings = Settings(dateFormatter: dateFormatter)
+        self.words.append(Word(id: 0, name: "Magnificent", description: "When something is awesome. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", shown: false))
         self.words.append(Word(id: 1, name: "Mesmerising", description: "When something is beautiful", shown: false))
     }
     

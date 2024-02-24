@@ -9,8 +9,15 @@ import SwiftUI
 
 struct AnkiView: View {
     @EnvironmentObject var model: WordAXModelView
+    var word: WordAX.Word? {
+        model.getWordToDisplay()
+    }
     var body: some View {
-        Text("This is Anki View")
+        if word != nil {
+            WordView(word: word!)
+        } else {
+            Text("There is no word to display, come back later")
+        }
     }
 }
 

@@ -14,12 +14,17 @@ class WordAXModelView: ObservableObject {
         model = WordAX()
     }
     
+    public func getDateFormatter() -> DateFormatter {
+        model.settings.dateFormatter
+    }
+    
     public func getWordToDisplay() -> Word? {
         let words = model.words
         
         if words.count > 0 {
             // if today is the date they're supposed to be shown
-            let displayToday = words.filter({ $0.displayOn != nil && $0.displayOn!.isToday()})
+            
+            let displayToday = words.filter({ $0.lastSeenOn != nil && $0.lastSeenOn!.add})
             if  displayToday.count > 0 {
                 return displayToday.first!
             }
@@ -33,7 +38,7 @@ class WordAXModelView: ObservableObject {
             let settings = model.settings
             if shownWords.count == 0 ||
                 settings.lastShownNew == nil ||
-                settings.lastShownNew!.addingTimeInterval(TimeInterval(settings.frequency.rawValue * 24 * 60 * 60)).isAfterToday() {
+                settings.lastShownNew!.addFrequency(frequency: settings.frequency).isAfterToday() {
                 return words.first!
             }
         }
@@ -61,6 +66,10 @@ extension Date {
         let selfDate = getOnlyDate(date: self)
         let paramDate = getOnlyDate(date: date)
         return selfDate.year! > paramDate.year! || selfDate.month! > paramDate.month! || selfDate.day! > paramDate.day!
+    }
+    
+    func addFrequency(frequency: WordAX.FrequencyEnum) -> Date {
+        self.addingTimeInterval(TimeInterval(frequency.rawValue * 24 * 60 * 60))
     }
     
     func isAfterToday() -> Bool {
