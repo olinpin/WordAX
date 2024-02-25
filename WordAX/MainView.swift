@@ -22,6 +22,12 @@ struct MainView: View {
                             Image(systemName: "star")
                             Text("Anki")
                         }
+                    WordListView()
+                        .tag("Word List")
+                        .tabItem {
+                            Image(systemName: "list.bullet")
+                            Text("Word List")
+                        }
                     SettingsView()
                         .tag("Settings")
                         .tabItem {
