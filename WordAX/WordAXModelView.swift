@@ -27,12 +27,12 @@ class WordAXModelView: ObservableObject {
                 return nil
             }
             // if today is the date they're supposed to be shown
-            let displayToday = words.filter({ $0.lastSeenOn != nil && $0.lastSeenOn!.addSpacedRepetitionMilestone(milestone: $0.nextSpacedRepetitionMilestone!).isBeforeTodayOrToday()})
+            
+            let displayToday = words.filter({ $0.lastSeenOn != nil && $0.lastSeenOn!.addSpacedRepetitionMilestone(milestone: $0.nextSpacedRepetitionMilestone).isBeforeTodayOrToday()})
             if  displayToday.count > 0 {
                 return displayToday.first!
             }
             
-            // first word ever shown
 //            let shownWords = words.filter({ $0.shown })
 //            if shownWords.count == 0 {
             return notShownWords.sorted(by: {$0.id < $1.id}).first
@@ -86,8 +86,11 @@ extension Date {
         self.addingTimeInterval(TimeInterval(frequency.rawValue * 24 * 60 * 60))
     }
     
-    func addSpacedRepetitionMilestone(milestone: WordAX.SpacedRepetitionMilestoneEnum) -> Date {
-        self.addingTimeInterval(TimeInterval(milestone.rawValue * 24 * 60 * 60))
+    func addSpacedRepetitionMilestone(milestone: WordAX.SpacedRepetitionMilestoneEnum?) -> Date {
+        if milestone == nil {
+            return self
+        }
+        return self.addingTimeInterval(TimeInterval(milestone!.rawValue * 24 * 60 * 60))
     }
     
     func isAfterToday() -> Bool {
