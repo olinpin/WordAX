@@ -36,9 +36,12 @@ struct WordAX {
             allCases.sorted {$0.rawValue < $1.rawValue }
         }
         
-        func getNext() -> SpacedRepetitionMilestoneEnum? {
+        static func getNext(milestone: SpacedRepetitionMilestoneEnum?) -> SpacedRepetitionMilestoneEnum? {
+            if milestone == nil {
+                return SpacedRepetitionMilestoneEnum.OneDay
+            }
             let sorted = WordAX.SpacedRepetitionMilestoneEnum.allCasesSorted
-            let milestoneIndex = sorted.firstIndex(where: {$0.rawValue == self.rawValue})!
+            let milestoneIndex = sorted.firstIndex(where: {$0.rawValue == milestone!.rawValue})!
             if milestoneIndex < WordAX.SpacedRepetitionMilestoneEnum.allCasesSorted.count {
                 return sorted[milestoneIndex + 1]
             }
@@ -52,7 +55,7 @@ struct WordAX {
         var dateFormatter: DateFormatter
     }
     
-    private mutating func setNextSpacedRepetitionMilestone(word: Word) {
+    public mutating func setNextSpacedRepetitionMilestone(word: Word) {
         if word.nextSpacedRepetitionMilestone != nil {
             let current = SpacedRepetitionMilestoneEnum.allCasesSorted.firstIndex(of: word.nextSpacedRepetitionMilestone!) ?? SpacedRepetitionMilestoneEnum.allCases.count
             let index = words.firstIndex(where:{$0.id == word.id}) ?? nil
@@ -61,6 +64,13 @@ struct WordAX {
             } else if index != nil {
                 words[index!].nextSpacedRepetitionMilestone = nil
             }
+        }
+    }
+    
+    public mutating func setSpacedRepetitionMilestone(wordId: Int, milestone: SpacedRepetitionMilestoneEnum?) {
+        let index = words.firstIndex(where:{$0.id == wordId}) ?? nil
+        if index != nil {
+            words[index!].nextSpacedRepetitionMilestone = milestone
         }
     }
     

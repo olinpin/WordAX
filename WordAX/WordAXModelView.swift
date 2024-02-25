@@ -45,6 +45,10 @@ class WordAXModelView: ObservableObject {
         // otherwise show nothing
         return nil
     }
+    
+    public func setSpacedRepetitionMilestone(wordId: Int, milestone: WordAX.SpacedRepetitionMilestoneEnum?) {
+        model.setSpacedRepetitionMilestone(wordId: wordId, milestone: milestone)
+    }
 }
 
 

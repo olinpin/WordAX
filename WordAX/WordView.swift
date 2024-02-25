@@ -10,7 +10,7 @@ import UIKit
 
 struct WordView: View {
     var word: WordAX.Word
-    @State var showDescription: Bool = false
+    @Binding var showDescription: Bool
     @EnvironmentObject var model: WordAXModelView
     @Environment(\.colorScheme) var colorScheme
     
@@ -19,7 +19,6 @@ struct WordView: View {
         let wordText = Text(word.name)
             .font(.title)
             .bold()
-        
         VStack {
             if word.shown && word.lastSeenOn != nil {
                 Text(model.getDateFormatter().string(from: word.lastSeenOn!))
@@ -46,6 +45,7 @@ struct WordView: View {
 }
 
 #Preview {
-    WordView(word: WordAXModelView().getWordToDisplay()!)
+    @State var showDescription = false
+    return WordView(word: WordAXModelView().getWordToDisplay()!, showDescription: $showDescription)
         .environmentObject(WordAXModelView())
 }

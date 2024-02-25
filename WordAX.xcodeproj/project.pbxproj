@@ -12,6 +12,7 @@
 		6C8185022B88C9FB0033CF46 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8185012B88C9FB0033CF46 /* SettingsView.swift */; };
 		6C8185042B88CA210033CF46 /* AnkiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8185032B88CA210033CF46 /* AnkiView.swift */; };
 		6C8185062B8A537F0033CF46 /* WordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8185052B8A537F0033CF46 /* WordView.swift */; };
+		6C8185082B8B523E0033CF46 /* NextRepetitionButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8185072B8B523D0033CF46 /* NextRepetitionButtonView.swift */; };
 		6CF439522B83541D004C3543 /* WordAXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF439512B83541D004C3543 /* WordAXApp.swift */; };
 		6CF439542B83541D004C3543 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF439532B83541D004C3543 /* MainView.swift */; };
 		6CF439562B83541E004C3543 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CF439552B83541E004C3543 /* Assets.xcassets */; };
@@ -24,6 +25,7 @@
 		6C8185012B88C9FB0033CF46 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		6C8185032B88CA210033CF46 /* AnkiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnkiView.swift; sourceTree = "<group>"; };
 		6C8185052B8A537F0033CF46 /* WordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordView.swift; sourceTree = "<group>"; };
+		6C8185072B8B523D0033CF46 /* NextRepetitionButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRepetitionButtonView.swift; sourceTree = "<group>"; };
 		6CF4394E2B83541D004C3543 /* WordAX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordAX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CF439512B83541D004C3543 /* WordAXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordAXApp.swift; sourceTree = "<group>"; };
 		6CF439532B83541D004C3543 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				6C8185012B88C9FB0033CF46 /* SettingsView.swift */,
 				6C8185032B88CA210033CF46 /* AnkiView.swift */,
 				6C8185052B8A537F0033CF46 /* WordView.swift */,
+				6C8185072B8B523D0033CF46 /* NextRepetitionButtonView.swift */,
 				6C8184FD2B88C9580033CF46 /* WordAX.swift */,
 				6C8184FF2B88C9660033CF46 /* WordAXModelView.swift */,
 				6CF439552B83541E004C3543 /* Assets.xcassets */,
@@ -154,6 +157,7 @@
 			files = (
 				6C8185022B88C9FB0033CF46 /* SettingsView.swift in Sources */,
 				6CF439542B83541D004C3543 /* MainView.swift in Sources */,
+				6C8185082B8B523E0033CF46 /* NextRepetitionButtonView.swift in Sources */,
 				6C8185062B8A537F0033CF46 /* WordView.swift in Sources */,
 				6C8185002B88C9660033CF46 /* WordAXModelView.swift in Sources */,
 				6C8185042B88CA210033CF46 /* AnkiView.swift in Sources */,

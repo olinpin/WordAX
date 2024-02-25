@@ -9,12 +9,26 @@ import SwiftUI
 
 struct AnkiView: View {
     @EnvironmentObject var model: WordAXModelView
+    @State var showDescription = true
     var word: WordAX.Word? {
         model.getWordToDisplay()
     }
     var body: some View {
         if word != nil {
-            WordView(word: word!)
+            VStack {
+                WordView(word: word!, showDescription: $showDescription)
+                if showDescription {
+                    Text("How did you do?")
+                        .font(.subheadline)
+                        .foregroundStyle(.gray)
+                    HStack {
+                        NextRepetitionButtonView(buttonText: "Poor", nextMilestone: word!.nextSpacedRepetitionMilestone, wordId: word!.id)
+                        NextRepetitionButtonView(buttonText: "Good", nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: word!.nextSpacedRepetitionMilestone), wordId: word!.id)
+                        NextRepetitionButtonView(buttonText: "Excellent", nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: word!.nextSpacedRepetitionMilestone)), wordId: word!.id)
+                    }
+                    .padding(.bottom)
+                }
+            }
         } else {
             Text("There is no word to display, come back later")
         }
