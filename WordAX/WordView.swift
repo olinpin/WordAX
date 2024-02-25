@@ -21,7 +21,8 @@ struct WordView: View {
             .bold()
         VStack {
             if word.shown && word.lastSeenOn != nil {
-                Text(model.getDateFormatter().string(from: word.lastSeenOn!))
+                Text("Last seen: " + model.getDateFormatter().string(from: word.lastSeenOn!))
+                    .font(.subheadline)
             }
             if showDescription {
                 wordText

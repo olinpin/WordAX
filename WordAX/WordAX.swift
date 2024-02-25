@@ -8,13 +8,14 @@
 import Foundation
 
 struct WordAX {
-    struct Word: Identifiable {
+    struct Word: Identifiable, Hashable {
         var id: Int
         var name: String
         var description: String
         var shown: Bool
         var nextSpacedRepetitionMilestone: SpacedRepetitionMilestoneEnum?
         var lastSeenOn: Date?
+        var shownCount: Int = 0
     }
     enum FrequencyEnum: Int {
         case Daily = 1
@@ -71,7 +72,19 @@ struct WordAX {
         let index = words.firstIndex(where:{$0.id == wordId}) ?? nil
         if index != nil {
             words[index!].nextSpacedRepetitionMilestone = milestone
+            if !words[index!].shown {
+                words[index!].shown = true
+            }
+            words[index!].lastSeenOn = Date()
         }
+    }
+    
+    public mutating func wordShown(wordId: Int) {
+        let index = words.firstIndex(where:{$0.id == wordId}) ?? nil
+        if index != nil {
+            words[index!].shownCount += 1
+        }
+        
     }
     
     var words: [Word] = []
@@ -80,7 +93,7 @@ struct WordAX {
     init() {
         self.words = []
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/mm/YYYY"
+        dateFormatter.dateFormat = "dd/MM/YYYY"
         self.settings = Settings(dateFormatter: dateFormatter)
         self.words.append(Word(id: 0, name: "Magnificent", description: "When something is awesome. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", shown: false))
         self.words.append(Word(id: 1, name: "Mesmerising", description: "When something is beautiful", shown: false))

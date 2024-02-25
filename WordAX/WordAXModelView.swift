@@ -22,32 +22,36 @@ class WordAXModelView: ObservableObject {
         let words = model.words
         
         if words.count > 0 {
+            let notShownWords = words.filter({!$0.shown})
+            if notShownWords.count == 0 {
+                return nil
+            }
             // if today is the date they're supposed to be shown
-            
-            let displayToday = words.filter({ $0.lastSeenOn != nil && $0.lastSeenOn!.addSpacedRepetitionMilestone(milestone: $0.nextSpacedRepetitionMilestone!).isAfterTodayOrToday()})
+            let displayToday = words.filter({ $0.lastSeenOn != nil && $0.lastSeenOn!.addSpacedRepetitionMilestone(milestone: $0.nextSpacedRepetitionMilestone!).isBeforeTodayOrToday()})
             if  displayToday.count > 0 {
                 return displayToday.first!
             }
             
             // first word ever shown
-            let shownWords = words.filter({ $0.shown })
-            if shownWords.count == 0 {
-                return words.first!
-            }
+//            let shownWords = words.filter({ $0.shown })
+//            if shownWords.count == 0 {
+            return notShownWords.sorted(by: {$0.id < $1.id}).first
+//            }
             // if today is the day to show a new word
-            let settings = model.settings
-            if shownWords.count == 0 ||
-                settings.lastShownNew == nil ||
-                settings.lastShownNew!.addFrequency(frequency: settings.frequency).isAfterToday() {
-                return words.first!
-            }
+//            let settings = model.settings
+//            if shownWords.count == 0 ||
+//                settings.lastShownNew == nil ||
+//                settings.lastShownNew!.addFrequency(frequency: settings.frequency).isAfterToday() {
+//                return words.first!
+//            }
         }
         // otherwise show nothing
         return nil
     }
     
-    public func setSpacedRepetitionMilestone(wordId: Int, milestone: WordAX.SpacedRepetitionMilestoneEnum?) {
+    public func ankiButtonClicked(wordId: Int, milestone: WordAX.SpacedRepetitionMilestoneEnum?) {
         model.setSpacedRepetitionMilestone(wordId: wordId, milestone: milestone)
+        model.wordShown(wordId: wordId)
     }
 }
 
@@ -72,6 +76,12 @@ extension Date {
         return selfDate.year! > paramDate.year! || selfDate.month! > paramDate.month! || selfDate.day! > paramDate.day!
     }
     
+    func isBefore(_ date: Date) -> Bool {
+        let selfDate = getOnlyDate(date: self)
+        let paramDate = getOnlyDate(date: date)
+        return selfDate.year! < paramDate.year! || selfDate.month! < paramDate.month! || selfDate.day! < paramDate.day!
+    }
+    
     func addFrequency(frequency: WordAX.FrequencyEnum) -> Date {
         self.addingTimeInterval(TimeInterval(frequency.rawValue * 24 * 60 * 60))
     }
@@ -84,7 +94,11 @@ extension Date {
         self.isAfter(Date())
     }
     
-    func isAfterTodayOrToday() -> Bool {
-        self.isAfterToday() || self.isToday()
+    func isBeforeToday() -> Bool {
+        self.isBefore(Date())
+    }
+    
+    func isBeforeTodayOrToday() -> Bool {
+        self.isBeforeToday() || self.isToday()
     }
 }

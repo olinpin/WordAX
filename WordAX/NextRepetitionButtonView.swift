@@ -11,11 +11,13 @@ struct NextRepetitionButtonView: View {
     let buttonText: String
     let nextMilestone: WordAX.SpacedRepetitionMilestoneEnum?
     let wordId: Int
+    @Binding var showDescription: Bool
     @EnvironmentObject var model: WordAXModelView
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
         Button(action: {
-            model.setSpacedRepetitionMilestone(wordId: wordId, milestone: nextMilestone)
+            model.ankiButtonClicked(wordId: wordId, milestone: nextMilestone)
+            self.showDescription = false
         }) {
             Text(buttonText)
                 .padding()
@@ -34,6 +36,7 @@ extension ShapeStyle where Self == Color {
 }
 
 #Preview {
-    NextRepetitionButtonView(buttonText: "Excellent", nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.OneDay, wordId: 0)
+    @State var showDescription = false
+    return NextRepetitionButtonView(buttonText: "Excellent", nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.OneDay, wordId: 0, showDescription: $showDescription)
         .environmentObject(WordAXModelView())
 }
