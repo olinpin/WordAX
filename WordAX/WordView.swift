@@ -14,20 +14,26 @@ struct WordView: View {
     @EnvironmentObject var model: WordAXModelView
     @Environment(\.colorScheme) var colorScheme
     
+    
     var body: some View {
+        let wordText = Text(word.name)
+            .font(.title)
+            .bold()
+        
         VStack {
-            Text(word.name)
-                .font(.title)
-                .bold()
             if word.shown && word.lastSeenOn != nil {
                 Text(model.getDateFormatter().string(from: word.lastSeenOn!))
             }
             if showDescription {
+                wordText
+                    .textSelection(.enabled)
                 Divider()
                     .background(colorScheme == .light ? Color.black : Color.white)
                     .padding(.horizontal)
                 Text(word.description)
                     .multilineTextAlignment(.center)
+            } else {
+                wordText
             }
         }
         .padding([.horizontal, .top])
