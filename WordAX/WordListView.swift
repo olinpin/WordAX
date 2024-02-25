@@ -8,11 +8,25 @@
 import SwiftUI
 
 struct WordListView: View {
+    @EnvironmentObject var model: WordAXModelView
+    @State var showDescription = true
     var body: some View {
-        Text("This is going to be a list of words")
+        NavigationSplitView {
+            List(model.words) { word in
+                NavigationLink {
+                    WordView(word: word, showDescription: $showDescription)
+                } label: {
+                    WordListRowView(word: word)
+                }
+            }
+            .navigationTitle("Word List")
+        } detail: {
+            Text("Select word to get details about")
+        }
     }
 }
 
 #Preview {
     WordListView()
+        .environmentObject(WordAXModelView())
 }

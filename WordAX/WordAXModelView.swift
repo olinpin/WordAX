@@ -14,6 +14,10 @@ class WordAXModelView: ObservableObject {
         model = WordAX()
     }
     
+    public var words: [Word] {
+        model.words
+    }
+    
     public func getDateFormatter() -> DateFormatter {
         model.settings.dateFormatter
     }
