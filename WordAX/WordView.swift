@@ -10,7 +10,7 @@ import UIKit
 
 struct WordView: View {
     var word: WordAX.Word
-    var showDescription: Bool = true
+    @State var showDescription: Bool = false
     @EnvironmentObject var model: WordAXModelView
     @Environment(\.colorScheme) var colorScheme
     
@@ -31,6 +31,11 @@ struct WordView: View {
             }
         }
         .padding([.horizontal, .top])
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            self.showDescription = true
+        }
     }
 }
 
