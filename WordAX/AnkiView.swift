@@ -21,12 +21,14 @@ struct AnkiView: View {
 //                    Text("How did you do?")
 //                        .font(.subheadline)
 //                        .foregroundStyle(.gray)
-                    HStack {
-                        NextRepetitionButtonView(buttonText: "Easy", nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: word!.nextSpacedRepetitionMilestone)), wordId: word!.id, showDescription: $showDescription)
-                        NextRepetitionButtonView(buttonText: "Medium", nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: word!.nextSpacedRepetitionMilestone), wordId: word!.id, showDescription: $showDescription)
-                        NextRepetitionButtonView(buttonText: "Hard/Wrong", nextMilestone: word!.nextSpacedRepetitionMilestone, wordId: word!.id, showDescription: $showDescription)
-                    }
-                    .padding(.bottom)
+                        HStack(alignment: .center) {
+                            NextRepetitionButtonView(buttonText: "Novice", nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: word!.nextSpacedRepetitionMilestone)), wordId: word!.id, showDescription: $showDescription)
+                            //                            .padding(.leading)
+                            NextRepetitionButtonView(buttonText: "Expert", nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: word!.nextSpacedRepetitionMilestone), wordId: word!.id, showDescription: $showDescription)
+                            NextRepetitionButtonView(buttonText: "Master", nextMilestone: word!.nextSpacedRepetitionMilestone, wordId: word!.id, showDescription: $showDescription)
+                            //                            .padding(.trailing)
+                        }
+                        .padding([.bottom, .trailing, .leading])
                 }
             }
         } else {
