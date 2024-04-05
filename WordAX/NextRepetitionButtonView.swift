@@ -11,20 +11,32 @@ struct NextRepetitionButtonView: View {
     let buttonText: String
     let nextMilestone: WordAX.SpacedRepetitionMilestoneEnum?
     let wordId: Int
+    let width: CGFloat
+    let color: Color
+    let geometry: GeometryProxy
+    let newText: String = "1h"
+//            { colorScheme == .light ? .cyan : .darkCyan }
     @Binding var showDescription: Bool
     @EnvironmentObject var model: WordAXModelView
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
-        Button(action: {
-            model.ankiButtonClicked(wordId: wordId, milestone: nextMilestone)
-            self.showDescription = false
-        }) {
-            Text(buttonText)
-                .padding()
+            Button(action: {
+                model.ankiButtonClicked(wordId: wordId, milestone: nextMilestone)
+                self.showDescription = false
+            }) {
+                VStack {
+                    Text(buttonText)
+                    Text(">" + newText)
+                        .font(.footnote)
+                        .bold()
+                }
+                .padding(.vertical, geometry.size.height / 80)
                 .foregroundColor(colorScheme == .light ? .black : .white)
-                .background(colorScheme == .light ? .cyan : .darkCyan)
-                .clipShape(RoundedRectangle(cornerRadius: 50))
-        }
+                .frame(maxWidth: width)
+            }
+            .background(color)
+            .buttonStyle(.plain)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
 
@@ -35,8 +47,8 @@ extension ShapeStyle where Self == Color {
     }
 }
 
-#Preview {
-    @State var showDescription = false
-    return NextRepetitionButtonView(buttonText: "Excellent", nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.OneDay, wordId: 0, showDescription: $showDescription)
-        .environmentObject(WordAXModelView())
-}
+//#Preview {
+//    @State var showDescription = false
+//    return NextRepetitionButtonView(buttonText: "Excellent", nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.OneDay, wordId: 0, showDescription: $showDescription)
+//        .environmentObject(WordAXModelView())
+//}
