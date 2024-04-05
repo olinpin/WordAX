@@ -14,7 +14,7 @@ struct NextRepetitionButtonView: View {
     let width: CGFloat
     let color: Color
     let geometry: GeometryProxy
-    let newText: String = "1h"
+    let timeText: String
 //            { colorScheme == .light ? .cyan : .darkCyan }
     @Binding var showDescription: Bool
     @EnvironmentObject var model: WordAXModelView
@@ -26,7 +26,7 @@ struct NextRepetitionButtonView: View {
             }) {
                 VStack {
                     Text(buttonText)
-                    Text(">" + newText)
+                    Text(">" + timeText)
                         .font(.footnote)
                         .bold()
                 }

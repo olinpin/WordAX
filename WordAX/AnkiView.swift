@@ -24,29 +24,35 @@ struct AnkiView: View {
                         //                        .foregroundStyle(.gray)
                         HStack(alignment: .center) {
                             NextRepetitionButtonView(
+                                buttonText: "Wrong",
+                                nextMilestone: word!.nextSpacedRepetitionMilestone,
+                                wordId: word!.id,
+                                width: geometry.size.width,
+                                color: .red,
+                                geometry: geometry,
+                                timeText: "1m",
+                                showDescription: $showDescription
+                            )
+                            NextRepetitionButtonView(
+                                buttonText: "Correct",
+                                nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: word!.nextSpacedRepetitionMilestone),
+                                wordId: word!.id,
+                                width:geometry.size.width,
+                                color: .orange,
+                                geometry: geometry,
+                                timeText: "10m",
+                                showDescription: $showDescription
+                            )
+                            NextRepetitionButtonView(
                                 buttonText: "Easy",
                                 nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: word!.nextSpacedRepetitionMilestone)),
                                 wordId: word!.id,
                                 width: geometry.size.width,
                                 color: .green,
                                 geometry: geometry,
-                                showDescription: $showDescription)
-                            NextRepetitionButtonView(
-                                buttonText: "Normal",
-                                nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: word!.nextSpacedRepetitionMilestone),
-                                wordId: word!.id,
-                                width:geometry.size.width,
-                                color: .orange,
-                                geometry: geometry,
-                                showDescription: $showDescription)
-                            NextRepetitionButtonView(
-                                buttonText: "Hard",
-                                nextMilestone: word!.nextSpacedRepetitionMilestone,
-                                wordId: word!.id,
-                                width: geometry.size.width,
-                                color: .red,
-                                geometry: geometry,
-                                showDescription: $showDescription)
+                                timeText: "1h",
+                                showDescription: $showDescription
+                            )
                         }
                         .padding([.bottom, .trailing, .leading])
                     }
