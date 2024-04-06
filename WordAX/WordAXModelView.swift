@@ -9,7 +9,7 @@ import Foundation
 
 class WordAXModelView: ObservableObject {
     @Published private var model: WordAX
-    typealias Word = WordAX.Word
+    typealias Word = WordAX.FlashCard
     init() {
         model = WordAX()
     }

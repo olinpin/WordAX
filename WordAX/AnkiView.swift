@@ -10,12 +10,12 @@ import SwiftUI
 struct AnkiView: View {
     @EnvironmentObject var model: WordAXModelView
     @State var showDescription = true
-    var word: WordAX.Word? {
+    var word: WordAX.FlashCard? {
         model.getWordToDisplay()
     }
     var body: some View {
-        if word != nil {
-            GeometryReader { geometry in
+        GeometryReader { geometry in
+            if word != nil {
                 VStack {
                     WordView(word: word!, showDescription: $showDescription)
                     if showDescription {
@@ -57,9 +57,9 @@ struct AnkiView: View {
                         .padding([.bottom, .trailing, .leading])
                     }
                 }
+            } else {
+                Text("There is no word to display, come back later")
             }
-        } else {
-            Text("There is no word to display, come back later")
         }
     }
 }

@@ -31,7 +31,7 @@ struct NextRepetitionButtonView: View {
                         .bold()
                 }
                 .padding(.vertical, geometry.size.height / 80)
-                .foregroundColor(colorScheme == .light ? .black : .white)
+                .foregroundColor(.black)
                 .frame(maxWidth: width)
             }
             .background(color)

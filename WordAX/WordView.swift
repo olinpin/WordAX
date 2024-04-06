@@ -9,7 +9,7 @@ import SwiftUI
 import UIKit
 
 struct WordView: View {
-    var word: WordAX.Word
+    var word: WordAX.FlashCard
     @Binding var showDescription: Bool
     @EnvironmentObject var model: WordAXModelView
     @Environment(\.colorScheme) var colorScheme

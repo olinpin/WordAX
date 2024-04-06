@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WordListRowView: View {
     @EnvironmentObject var model: WordAXModelView
-    var word: WordAX.Word
+    var word: WordAX.FlashCard
     @State var favorite = true
     var body: some View {
         HStack {
@@ -47,11 +47,11 @@ struct WordListRowView: View {
 
 #Preview {
     Group {
-        WordListRowView(word: WordAX.Word(id: 0, name: "Mesmerizing", description: "Some very long description like Lorem Ipsum which I'm to lazy to copy", shown: false, nextSpacedRepetitionMilestone: WordAX.SpacedRepetitionMilestoneEnum.OneDay, lastSeenOn: Date(), shownCount: 1))
+        WordListRowView(word: WordAX.FlashCard(id: 0, name: "Mesmerizing", description: "Some very long description like Lorem Ipsum which I'm to lazy to copy", shown: false, nextSpacedRepetitionMilestone: WordAX.SpacedRepetitionMilestoneEnum.OneDay, lastSeenOn: Date(), shownCount: 1))
             .environmentObject(WordAXModelView())
-        WordListRowView(word: WordAX.Word(id: 0, name: "Mesmerizing", description: "Some very long description like Lorem Ipsum which I'm to lazy to copy", shown: false, nextSpacedRepetitionMilestone: WordAX.SpacedRepetitionMilestoneEnum.OneDay, lastSeenOn: Date(), shownCount: 1))
+        WordListRowView(word: WordAX.FlashCard(id: 0, name: "Mesmerizing", description: "Some very long description like Lorem Ipsum which I'm to lazy to copy", shown: false, nextSpacedRepetitionMilestone: WordAX.SpacedRepetitionMilestoneEnum.OneDay, lastSeenOn: Date(), shownCount: 1))
             .environmentObject(WordAXModelView())
-        WordListRowView(word: WordAX.Word(id: 0, name: "Mesmerizing", description: "Some very long description like Lorem Ipsum which I'm to lazy to copy", shown: false, nextSpacedRepetitionMilestone: WordAX.SpacedRepetitionMilestoneEnum.OneDay, lastSeenOn: Date(), shownCount: 1))
+        WordListRowView(word: WordAX.FlashCard(id: 0, name: "Mesmerizing", description: "Some very long description like Lorem Ipsum which I'm to lazy to copy", shown: false, nextSpacedRepetitionMilestone: WordAX.SpacedRepetitionMilestoneEnum.OneDay, lastSeenOn: Date(), shownCount: 1))
             .environmentObject(WordAXModelView())
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 struct WordAX {
-    struct Word: Identifiable, Hashable {
+    struct FlashCard: Identifiable, Hashable {
         var id: Int
         var name: String
         var description: String
@@ -17,6 +17,7 @@ struct WordAX {
         var lastSeenOn: Date?
         var shownCount: Int = 0
     }
+    
     enum FrequencyEnum: Int {
         case Daily = 1
         case Weekly = 7
@@ -56,7 +57,7 @@ struct WordAX {
         var dateFormatter: DateFormatter
     }
     
-    public mutating func setNextSpacedRepetitionMilestone(word: Word) {
+    public mutating func setNextSpacedRepetitionMilestone(word: FlashCard) {
         if word.nextSpacedRepetitionMilestone != nil {
             let current = SpacedRepetitionMilestoneEnum.allCasesSorted.firstIndex(of: word.nextSpacedRepetitionMilestone!) ?? SpacedRepetitionMilestoneEnum.allCases.count
             let index = words.firstIndex(where:{$0.id == word.id}) ?? nil
@@ -87,7 +88,7 @@ struct WordAX {
         
     }
     
-    var words: [Word] = []
+    var words: [FlashCard] = []
     var settings: Settings
     
     init() {
@@ -95,8 +96,8 @@ struct WordAX {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/YYYY"
         self.settings = Settings(dateFormatter: dateFormatter)
-        self.words.append(Word(id: 0, name: "Magnificent", description: "When something is awesome. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", shown: false))
-        self.words.append(Word(id: 1, name: "Mesmerising", description: "When something is beautiful", shown: false))
+        self.words.append(FlashCard(id: 0, name: "Magnificent", description: "When something is awesome. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", shown: false))
+        self.words.append(FlashCard(id: 1, name: "Mesmerising", description: "When something is beautiful", shown: false))
     }
     
 }
