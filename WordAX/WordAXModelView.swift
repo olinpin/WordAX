@@ -57,6 +57,10 @@ class WordAXModelView: ObservableObject {
         model.setSpacedRepetitionMilestone(flashcardId: flashcardId, milestone: milestone)
         model.flashcardShown(flashcardId: flashcardId)
     }
+    
+    public func addFlashCard(name: String, description: String) {
+        self.model.add(flashcard: FlashCard(id: (self.flashcards.map{$0.id}.max() ?? -1) + 1, name: name, description: description))
+    }
 }
 
 

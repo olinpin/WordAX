@@ -12,7 +12,7 @@ struct WordAX {
         var id: Int
         var name: String
         var description: String
-        var shown: Bool
+        var shown: Bool = false
         var nextSpacedRepetitionMilestone: SpacedRepetitionMilestoneEnum?
         var lastSeenOn: Date?
         var shownCount: Int = 0
