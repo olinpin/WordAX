@@ -14,8 +14,8 @@ struct AnkiView: View {
         model.getFlashCardsToDisplay()
     }
     var body: some View {
-        GeometryReader { geometry in
-            if flashcard != nil {
+        if flashcard != nil {
+            GeometryReader { geometry in
                 VStack {
                     FlashCardView(flashcard: flashcard!, showDescription: $showDescription)
                     if showDescription {
@@ -57,9 +57,12 @@ struct AnkiView: View {
                         .padding([.bottom, .trailing, .leading])
                     }
                 }
-            } else {
-                Text("There is no word to display, come back later")
             }
+        } else {
+            Text("There are currently no words to display")
+                .padding()
+                .background(.yellow)
+                .clipShape(.buttonBorder)
         }
     }
 }
