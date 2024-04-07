@@ -103,8 +103,8 @@ struct WordAX {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/YYYY"
         self.settings = Settings(dateFormatter: dateFormatter)
-        self.flashcards.append(FlashCard(id: 0, name: "Magnificent", description: "When something is awesome. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", shown: false))
-        self.flashcards.append(FlashCard(id: 1, name: "Mesmerising", description: "When something is beautiful", shown: false))
+//        self.flashcards.append(FlashCard(id: 0, name: "Magnificent", description: "When something is awesome. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", shown: false))
+//        self.flashcards.append(FlashCard(id: 1, name: "Mesmerising", description: "When something is beautiful", shown: false))
     }
     
 }
