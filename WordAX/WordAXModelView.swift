@@ -9,37 +9,37 @@ import Foundation
 
 class WordAXModelView: ObservableObject {
     @Published private var model: WordAX
-    typealias Word = WordAX.FlashCard
+    typealias FlashCard = WordAX.FlashCard
     init() {
         model = WordAX()
     }
     
-    public var words: [Word] {
-        model.words
+    public var flashcards: [FlashCard] {
+        model.flashcards
     }
     
     public func getDateFormatter() -> DateFormatter {
         model.settings.dateFormatter
     }
     
-    public func getWordToDisplay() -> Word? {
-        let words = model.words
+    public func getFlashCardsToDisplay() -> FlashCard? {
+        let flashcards = model.flashcards
         
-        if words.count > 0 {
-            let notShownWords = words.filter({!$0.shown})
-            if notShownWords.count == 0 {
+        if flashcards.count > 0 {
+            let notShownFlashCards = flashcards.filter({!$0.shown})
+            if notShownFlashCards.count == 0 {
                 return nil
             }
             // if today is the date they're supposed to be shown
             
-            let displayToday = words.filter({ $0.lastSeenOn != nil && $0.lastSeenOn!.addSpacedRepetitionMilestone(milestone: $0.nextSpacedRepetitionMilestone).isBeforeTodayOrToday()})
+            let displayToday = flashcards.filter({ $0.lastSeenOn != nil && $0.lastSeenOn!.addSpacedRepetitionMilestone(milestone: $0.nextSpacedRepetitionMilestone).isBeforeTodayOrToday()})
             if  displayToday.count > 0 {
                 return displayToday.first!
             }
             
 //            let shownWords = words.filter({ $0.shown })
 //            if shownWords.count == 0 {
-            return notShownWords.sorted(by: {$0.id < $1.id}).first
+            return notShownFlashCards.sorted(by: {$0.id < $1.id}).first
 //            }
             // if today is the day to show a new word
 //            let settings = model.settings
@@ -53,9 +53,9 @@ class WordAXModelView: ObservableObject {
         return nil
     }
     
-    public func ankiButtonClicked(wordId: Int, milestone: WordAX.SpacedRepetitionMilestoneEnum?) {
-        model.setSpacedRepetitionMilestone(wordId: wordId, milestone: milestone)
-        model.wordShown(wordId: wordId)
+    public func ankiButtonClicked(flashcardId: Int, milestone: WordAX.SpacedRepetitionMilestoneEnum?) {
+        model.setSpacedRepetitionMilestone(flashcardId: flashcardId, milestone: milestone)
+        model.flashcardShown(flashcardId: flashcardId)
     }
 }
 

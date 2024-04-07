@@ -9,15 +9,15 @@ import SwiftUI
 
 struct AnkiView: View {
     @EnvironmentObject var model: WordAXModelView
-    @State var showDescription = true
-    var word: WordAX.FlashCard? {
-        model.getWordToDisplay()
+    @State var showDescription = false
+    var flashcard: WordAX.FlashCard? {
+        model.getFlashCardsToDisplay()
     }
     var body: some View {
         GeometryReader { geometry in
-            if word != nil {
+            if flashcard != nil {
                 VStack {
-                    WordView(word: word!, showDescription: $showDescription)
+                    FlashCardView(flashcard: flashcard!, showDescription: $showDescription)
                     if showDescription {
                         //                    Text("How did you do?")
                         //                        .font(.subheadline)
@@ -25,8 +25,8 @@ struct AnkiView: View {
                         HStack(alignment: .center) {
                             NextRepetitionButtonView(
                                 buttonText: "Wrong",
-                                nextMilestone: word!.nextSpacedRepetitionMilestone,
-                                wordId: word!.id,
+                                nextMilestone: flashcard!.nextSpacedRepetitionMilestone,
+                                flashcardId: flashcard!.id,
                                 width: geometry.size.width,
                                 color: .red,
                                 geometry: geometry,
@@ -35,8 +35,8 @@ struct AnkiView: View {
                             )
                             NextRepetitionButtonView(
                                 buttonText: "Correct",
-                                nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: word!.nextSpacedRepetitionMilestone),
-                                wordId: word!.id,
+                                nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: flashcard!.nextSpacedRepetitionMilestone),
+                                flashcardId: flashcard!.id,
                                 width:geometry.size.width,
                                 color: .orange,
                                 geometry: geometry,
@@ -45,8 +45,8 @@ struct AnkiView: View {
                             )
                             NextRepetitionButtonView(
                                 buttonText: "Easy",
-                                nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: word!.nextSpacedRepetitionMilestone)),
-                                wordId: word!.id,
+                                nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: flashcard!.nextSpacedRepetitionMilestone)),
+                                flashcardId: flashcard!.id,
                                 width: geometry.size.width,
                                 color: .green,
                                 geometry: geometry,

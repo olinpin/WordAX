@@ -10,7 +10,7 @@ import SwiftUI
 struct NextRepetitionButtonView: View {
     let buttonText: String
     let nextMilestone: WordAX.SpacedRepetitionMilestoneEnum?
-    let wordId: Int
+    let flashcardId: Int
     let width: CGFloat
     let color: Color
     let geometry: GeometryProxy
@@ -21,7 +21,7 @@ struct NextRepetitionButtonView: View {
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
             Button(action: {
-                model.ankiButtonClicked(wordId: wordId, milestone: nextMilestone)
+                model.ankiButtonClicked(flashcardId: flashcardId, milestone: nextMilestone)
                 self.showDescription = false
             }) {
                 VStack {

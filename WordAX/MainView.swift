@@ -22,11 +22,11 @@ struct MainView: View {
                             Image(systemName: "star")
                             Text("Anki")
                         }
-                    WordListView()
-                        .tag("Word List")
+                    FlashCardListView()
+                        .tag("Flashcards")
                         .tabItem {
                             Image(systemName: "list.bullet")
-                            Text("Word List")
+                            Text("Flashcards")
                         }
                     SettingsView()
                         .tag("Settings")

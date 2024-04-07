@@ -8,32 +8,32 @@
 import SwiftUI
 import UIKit
 
-struct WordView: View {
-    var word: WordAX.FlashCard
+struct FlashCardView: View {
+    var flashcard: WordAX.FlashCard
     @Binding var showDescription: Bool
     @EnvironmentObject var model: WordAXModelView
     @Environment(\.colorScheme) var colorScheme
     
     
     var body: some View {
-        let wordText = Text(word.name)
+        let flashcardText = Text(flashcard.name)
             .font(.title)
             .bold()
         VStack {
-            if word.shown && word.lastSeenOn != nil {
-                Text("Last seen: " + model.getDateFormatter().string(from: word.lastSeenOn!))
+            if flashcard.shown && flashcard.lastSeenOn != nil {
+                Text("Last seen: " + model.getDateFormatter().string(from: flashcard.lastSeenOn!))
                     .font(.subheadline)
             }
             if showDescription {
-                wordText
+                flashcardText
                     .textSelection(.enabled)
                 Divider()
                     .background(colorScheme == .light ? Color.black : Color.white)
                     .padding(.horizontal)
-                Text(word.description)
+                Text(flashcard.description)
                     .multilineTextAlignment(.center)
             } else {
-                wordText
+                flashcardText
             }
         }
         .padding([.horizontal, .top])
@@ -47,6 +47,6 @@ struct WordView: View {
 
 #Preview {
     @State var showDescription = false
-    return WordView(word: WordAXModelView().getWordToDisplay()!, showDescription: $showDescription)
+    return FlashCardView(flashcard: WordAXModelView().getFlashCardsToDisplay()!, showDescription: $showDescription)
         .environmentObject(WordAXModelView())
 }

@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-struct WordListView: View {
+struct FlashCardListView: View {
     @EnvironmentObject var model: WordAXModelView
     @State var showDescription = true
     var body: some View {
         NavigationSplitView {
-            List(model.words) { word in
+            List(model.flashcards) { word in
                 NavigationLink {
-                    WordView(word: word, showDescription: $showDescription)
+                    FlashCardView(flashcard: word, showDescription: $showDescription)
                 } label: {
-                    WordListRowView(word: word)
+                    FlashCardListRowView(flashcard: word)
                 }
             }
             .navigationTitle("Word List")
@@ -27,6 +27,6 @@ struct WordListView: View {
 }
 
 #Preview {
-    WordListView()
+    FlashCardListView()
         .environmentObject(WordAXModelView())
 }
