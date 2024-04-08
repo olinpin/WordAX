@@ -9,11 +9,13 @@ import SwiftUI
 
 @main
 struct WordAXApp: App {
-    @StateObject var model = WordAXModelView()
+    @StateObject private var model = WordAXModelView()
+    @StateObject private var dataControler = DataController()
     var body: some Scene {
         WindowGroup {
             MainView()
                 .environmentObject(model)
+                .environment(\.managedObjectContext, dataControler.container.viewContext)
         }
     }
 }

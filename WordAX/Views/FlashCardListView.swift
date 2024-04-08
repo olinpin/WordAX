@@ -15,12 +15,12 @@ struct FlashCardListView: View {
         GeometryReader { geometry in
             NavigationSplitView {
                 Group {
-                    if !model.flashcards.isEmpty {
-                        List(model.flashcards) { word in
+                    if !DataController.shared.getAllFlashcards().isEmpty {
+                        List(DataController.shared.getAllFlashcards()) { flashcard in
                             NavigationLink {
-                                FlashCardView(flashcard: word, showDescription: $showDescription)
+                                FlashCardView(flashcard: flashcard, showDescription: $showDescription)
                             } label: {
-                                FlashCardListRowView(flashcard: word)
+                                FlashCardListRowView(flashcard: flashcard)
                             }
                         }
                     }
@@ -32,7 +32,7 @@ struct FlashCardListView: View {
                             .frame(maxWidth: geometry.size.width - 30)
                     }
                 }
-                .navigationTitle("Word List")
+                .navigationTitle("All Flashcards")
                 .toolbar {
                     Button(action: {
                         self.addFlashcard = true

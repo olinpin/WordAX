@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FlashCardListRowView: View {
     @EnvironmentObject var model: WordAXModelView
-    var flashcard: WordAX.FlashCard
+    var flashcard: Flashcard
     @State var favorite = true
     var body: some View {
         HStack {
@@ -30,12 +30,12 @@ struct FlashCardListRowView: View {
             }
             .padding(.trailing)
             VStack {
-                Text(flashcard.name)
+                Text(flashcard.name ?? "Unknown")
                     .bold()
                     .font(.system(size: 19))
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Text(flashcard.description)
+                Text(flashcard.desc ?? "Unknown")
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .lineLimit(1)
@@ -46,12 +46,16 @@ struct FlashCardListRowView: View {
 }
 
 #Preview {
-    Group {
-        FlashCardListRowView(flashcard: WordAX.FlashCard(id: 0, name: "Mesmerizing", description: "Some very long description like Lorem Ipsum which I'm to lazy to copy", shown: false, nextSpacedRepetitionMilestone: WordAX.SpacedRepetitionMilestoneEnum.OneDay, lastSeenOn: Date(), shownCount: 1))
+    let fc = Flashcard()
+    fc.id = UUID()
+    fc.name = "Mesmerizing"
+    fc.desc = "Some very long description like Lorem Ipsum which I'm to lazy to copy"
+    return Group {
+        FlashCardListRowView(flashcard: fc)
             .environmentObject(WordAXModelView())
-        FlashCardListRowView(flashcard: WordAX.FlashCard(id: 0, name: "Mesmerizing", description: "Some very long description like Lorem Ipsum which I'm to lazy to copy", shown: false, nextSpacedRepetitionMilestone: WordAX.SpacedRepetitionMilestoneEnum.OneDay, lastSeenOn: Date(), shownCount: 1))
+        FlashCardListRowView(flashcard: fc)
             .environmentObject(WordAXModelView())
-        FlashCardListRowView(flashcard: WordAX.FlashCard(id: 0, name: "Mesmerizing", description: "Some very long description like Lorem Ipsum which I'm to lazy to copy", shown: false, nextSpacedRepetitionMilestone: WordAX.SpacedRepetitionMilestoneEnum.OneDay, lastSeenOn: Date(), shownCount: 1))
+        FlashCardListRowView(flashcard: fc)
             .environmentObject(WordAXModelView())
     }
 }

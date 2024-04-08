@@ -9,14 +9,14 @@ import SwiftUI
 import UIKit
 
 struct FlashCardView: View {
-    var flashcard: WordAX.FlashCard
+    var flashcard: Flashcard
     @Binding var showDescription: Bool
     @EnvironmentObject var model: WordAXModelView
     @Environment(\.colorScheme) var colorScheme
     
     
     var body: some View {
-        let flashcardText = Text(flashcard.name)
+        let flashcardText = Text(flashcard.name ?? "Unknown")
             .font(.title)
             .bold()
         VStack {
@@ -30,7 +30,7 @@ struct FlashCardView: View {
                 Divider()
                     .background(colorScheme == .light ? Color.black : Color.white)
                     .padding(.horizontal)
-                Text(flashcard.description)
+                Text(flashcard.desc ?? "No description added")
                     .multilineTextAlignment(.center)
             } else {
                 flashcardText
@@ -47,6 +47,6 @@ struct FlashCardView: View {
 
 #Preview {
     @State var showDescription = false
-    return FlashCardView(flashcard: WordAXModelView().getFlashCardsToDisplay()!, showDescription: $showDescription)
+    return FlashCardView(flashcard: DataController.shared.getAllFlashcards()[0], showDescription: $showDescription)
         .environmentObject(WordAXModelView())
 }

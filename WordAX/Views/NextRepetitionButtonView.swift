@@ -10,7 +10,7 @@ import SwiftUI
 struct NextRepetitionButtonView: View {
     let buttonText: String
     let nextMilestone: WordAX.SpacedRepetitionMilestoneEnum?
-    let flashcardId: Int
+    let flashcardId: UUID
     let width: CGFloat
     let color: Color
     let geometry: GeometryProxy

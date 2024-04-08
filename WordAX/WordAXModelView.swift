@@ -10,20 +10,21 @@ import Foundation
 class WordAXModelView: ObservableObject {
     @Published private var model: WordAX
     typealias FlashCard = WordAX.FlashCard
+    typealias SpacedRepetitionMilestoneEnum = WordAX.SpacedRepetitionMilestoneEnum
     init() {
         model = WordAX()
     }
     
-    public var flashcards: [FlashCard] {
-        model.flashcards
+    public var flashcards: [Flashcard] {
+        DataController.shared.getAllFlashcards()
     }
     
     public func getDateFormatter() -> DateFormatter {
         model.settings.dateFormatter
     }
     
-    public func getFlashCardsToDisplay() -> FlashCard? {
-        let flashcards = model.flashcards
+    public func getFlashCardsToDisplay() -> Flashcard? {
+        let flashcards = self.flashcards
         
         if flashcards.count > 0 {
             let notShownFlashCards = flashcards.filter({!$0.shown})
@@ -32,7 +33,7 @@ class WordAXModelView: ObservableObject {
             }
             // if today is the date they're supposed to be shown
             
-            let displayToday = flashcards.filter({ $0.lastSeenOn != nil && $0.lastSeenOn!.addSpacedRepetitionMilestone(milestone: $0.nextSpacedRepetitionMilestone).isBeforeTodayOrToday()})
+            let displayToday = flashcards.filter({ $0.lastSeenOn != nil && $0.lastSeenOn!.addSpacedRepetitionMilestone(milestone: SpacedRepetitionMilestoneEnum.getMilestoneFromInt(value: $0.nextSpacedRepetitionMilestone)).isBeforeTodayOrToday()})
             if  displayToday.count > 0 {
                 return displayToday.first!
             }
@@ -53,13 +54,15 @@ class WordAXModelView: ObservableObject {
         return nil
     }
     
-    public func ankiButtonClicked(flashcardId: Int, milestone: WordAX.SpacedRepetitionMilestoneEnum?) {
-        model.setSpacedRepetitionMilestone(flashcardId: flashcardId, milestone: milestone)
-        model.flashcardShown(flashcardId: flashcardId)
+    public func ankiButtonClicked(flashcardId: UUID, milestone: WordAX.SpacedRepetitionMilestoneEnum?) {
+        // TODO: Fix this with Core Data
+//        model.setSpacedRepetitionMilestone(flashcardId: flashcardId, milestone: milestone)
+//        model.flashcardShown(flashcardId: flashcardId)
     }
     
     public func addFlashCard(name: String, description: String) {
-        self.model.add(flashcard: FlashCard(id: (self.flashcards.map{$0.id}.max() ?? -1) + 1, name: name, description: description))
+//        self.model.add(flashcard: FlashCard(id: (self.flashcards.map{$0.id}.max() ?? -1) + 1, name: name, description: description))
+        DataController.shared.addFlashcard(name: name, description: description)
     }
 }
 

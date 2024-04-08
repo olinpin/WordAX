@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct WordAX {
     struct FlashCard: Identifiable, Hashable {
@@ -25,7 +26,14 @@ struct WordAX {
         case Monthly = 30
     }
     
-    enum SpacedRepetitionMilestoneEnum: Int, CaseIterable {
+    
+    public mutating func add(flashcard: FlashCard) {
+        self.flashcards.append(flashcard)
+    }
+
+
+    @objc enum SpacedRepetitionMilestoneEnum: Int64, CaseIterable {
+        case Now = 0 // starting value
         case OneMinute = 60 // 60 * 1
         case TenMinutes = 600 // 60 * 10
         case OneHour = 3600 // 60 * 60
@@ -52,6 +60,11 @@ struct WordAX {
             }
             return nil
         }
+
+        static func getMilestoneFromInt(value: Int64) -> SpacedRepetitionMilestoneEnum {
+            return SpacedRepetitionMilestoneEnum.allCasesSorted.first(where: {$0.rawValue == value}) ?? SpacedRepetitionMilestoneEnum.Now
+        }
+        
     }
     
     struct Settings {
@@ -93,10 +106,6 @@ struct WordAX {
     
     var flashcards: [FlashCard] = []
     var settings: Settings
-    
-    public mutating func add(flashcard: FlashCard) {
-        self.flashcards.append(flashcard)
-    }
     
     init() {
         self.flashcards = []

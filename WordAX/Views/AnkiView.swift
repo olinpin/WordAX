@@ -10,7 +10,7 @@ import SwiftUI
 struct AnkiView: View {
     @EnvironmentObject var model: WordAXModelView
     @State var showDescription = false
-    var flashcard: WordAX.FlashCard? {
+    var flashcard: Flashcard? {
         model.getFlashCardsToDisplay()
     }
     var body: some View {
@@ -25,8 +25,8 @@ struct AnkiView: View {
                         HStack(alignment: .center) {
                             NextRepetitionButtonView(
                                 buttonText: "Wrong",
-                                nextMilestone: flashcard!.nextSpacedRepetitionMilestone,
-                                flashcardId: flashcard!.id,
+                                nextMilestone: flashcard!.getSpacedRepetitionMilestone(),
+                                flashcardId: flashcard!.id!,
                                 width: geometry.size.width,
                                 color: .red,
                                 geometry: geometry,
@@ -35,8 +35,8 @@ struct AnkiView: View {
                             )
                             NextRepetitionButtonView(
                                 buttonText: "Correct",
-                                nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: flashcard!.nextSpacedRepetitionMilestone),
-                                flashcardId: flashcard!.id,
+                                nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: flashcard!.getSpacedRepetitionMilestone()),
+                                flashcardId: flashcard!.id!,
                                 width:geometry.size.width,
                                 color: .orange,
                                 geometry: geometry,
@@ -45,8 +45,8 @@ struct AnkiView: View {
                             )
                             NextRepetitionButtonView(
                                 buttonText: "Easy",
-                                nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: flashcard!.nextSpacedRepetitionMilestone)),
-                                flashcardId: flashcard!.id,
+                                nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: flashcard!.getSpacedRepetitionMilestone())),
+                                flashcardId: flashcard!.id!,
                                 width: geometry.size.width,
                                 color: .green,
                                 geometry: geometry,
