@@ -11,7 +11,7 @@ struct AddFlashCard: View {
     @State var text: String = ""
     @State var description: String = ""
     @Binding var isShowing: Bool
-    var addFlashCard: (String, String) -> Void
+    @Environment(\.managedObjectContext) var moc
     var body: some View {
         NavigationStack {
             List {
@@ -31,7 +31,16 @@ struct AddFlashCard: View {
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button(action: {
-                        self.addFlashCard(self.text, self.description)
+                        let flashcard = Flashcard(context: moc)
+                        flashcard.id = UUID()
+                        flashcard.name = self.text
+                        flashcard.desc = self.description
+                        flashcard.shown = false
+                        flashcard.nextSpacedRepetitionMilestone = 0
+                        flashcard.lastSeenOn = nil
+                        flashcard.shownCount = 0
+                        flashcard.dateAdded = Date()
+                        try? moc.save()
                         self.isShowing = false
                     }, label: {
                         Text("Create")
@@ -46,8 +55,5 @@ struct AddFlashCard: View {
 
 #Preview {
     @State var isShowing = true
-    func add(name: String, desc: String) {
-        return
-    }
-    return AddFlashCard(isShowing: $isShowing, addFlashCard: add)
+    return AddFlashCard(isShowing: $isShowing)
 }

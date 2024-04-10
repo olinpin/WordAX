@@ -6,63 +6,35 @@
 //
 
 import Foundation
+import SwiftUI
 
 class WordAXModelView: ObservableObject {
-    @Published private var model: WordAX
-    typealias FlashCard = WordAX.FlashCard
-    typealias SpacedRepetitionMilestoneEnum = WordAX.SpacedRepetitionMilestoneEnum
+    typealias SpacedRepetitionMilestoneEnum = Flashcard.SpacedRepetitionMilestoneEnum
+    
+    let settings: Settings
+    
     init() {
-        model = WordAX()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/YYYY"
+        self.settings = Settings(dateFormatter: dateFormatter)
     }
     
-    public var flashcards: [Flashcard] {
-        DataController.shared.getAllFlashcards()
+    struct Settings {
+        var dateFormatter: DateFormatter
+    }
+
+    public func getFlashcards(moc: DataController) -> [Flashcard] {
+        moc.getAllFlashcards()
     }
     
     public func getDateFormatter() -> DateFormatter {
-        model.settings.dateFormatter
+        self.settings.dateFormatter
     }
     
-    public func getFlashCardsToDisplay() -> Flashcard? {
-        let flashcards = self.flashcards
-        
-        if flashcards.count > 0 {
-            let notShownFlashCards = flashcards.filter({!$0.shown})
-            if notShownFlashCards.count == 0 {
-                return nil
-            }
-            // if today is the date they're supposed to be shown
-            
-            let displayToday = flashcards.filter({ $0.lastSeenOn != nil && $0.lastSeenOn!.addSpacedRepetitionMilestone(milestone: SpacedRepetitionMilestoneEnum.getMilestoneFromInt(value: $0.nextSpacedRepetitionMilestone)).isBeforeTodayOrToday()})
-            if  displayToday.count > 0 {
-                return displayToday.first!
-            }
-            
-//            let shownWords = words.filter({ $0.shown })
-//            if shownWords.count == 0 {
-            return notShownFlashCards.sorted(by: {$0.id < $1.id}).first
-//            }
-            // if today is the day to show a new word
-//            let settings = model.settings
-//            if shownWords.count == 0 ||
-//                settings.lastShownNew == nil ||
-//                settings.lastShownNew!.addFrequency(frequency: settings.frequency).isAfterToday() {
-//                return words.first!
-//            }
-        }
-        // otherwise show nothing
-        return nil
-    }
     
-    public func ankiButtonClicked(flashcardId: UUID, milestone: WordAX.SpacedRepetitionMilestoneEnum?) {
-        // TODO: Fix this with Core Data
-//        model.setSpacedRepetitionMilestone(flashcardId: flashcardId, milestone: milestone)
-//        model.flashcardShown(flashcardId: flashcardId)
-    }
-    
-    public func addFlashCard(name: String, description: String) {
-//        self.model.add(flashcard: FlashCard(id: (self.flashcards.map{$0.id}.max() ?? -1) + 1, name: name, description: description))
-        DataController.shared.addFlashcard(name: name, description: description)
+    public func ankiButtonClicked(flashcardId: UUID, milestone: Flashcard.SpacedRepetitionMilestoneEnum?, moc: DataController) {
+        moc.setSpacedRepetitionMilestone(flashcardId: flashcardId, milestone: milestone)
+        moc.flashcardShown(flashcardId: flashcardId)
     }
 }
 
@@ -93,11 +65,11 @@ extension Date {
         return selfDate.year! < paramDate.year! || selfDate.month! < paramDate.month! || selfDate.day! < paramDate.day!
     }
     
-    func addFrequency(frequency: WordAX.FrequencyEnum) -> Date {
-        self.addingTimeInterval(TimeInterval(frequency.rawValue * 24 * 60 * 60))
-    }
+//    func addFrequency(frequency: WordAX.FrequencyEnum) -> Date {
+//        self.addingTimeInterval(TimeInterval(frequency.rawValue * 24 * 60 * 60))
+//    }
     
-    func addSpacedRepetitionMilestone(milestone: WordAX.SpacedRepetitionMilestoneEnum?) -> Date {
+    func addSpacedRepetitionMilestone(milestone: Flashcard.SpacedRepetitionMilestoneEnum?) -> Date {
         if milestone == nil {
             return self
         }

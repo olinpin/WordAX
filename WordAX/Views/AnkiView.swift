@@ -6,27 +6,40 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct AnkiView: View {
     @EnvironmentObject var model: WordAXModelView
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(sortDescriptors: [
+        NSSortDescriptor(key: "nextSpacedRepetitionMilestone", ascending: false),
+        NSSortDescriptor(key: "lastSeenOn", ascending: true)
+    ], predicate: NSCompoundPredicate(type: .or, subpredicates: [
+        NSCompoundPredicate(type: .and, subpredicates: [
+            NSPredicate(format: "%K != nil", "lastSeenOn"),
+            NSPredicate(format: "lastSeenOn + nextSpacedRepetitionMilestone < %@", Date() as CVarArg)
+        ]),
+        NSPredicate(format: "lastSeenOn == nil")
+    ])) var flashcards: FetchedResults<Flashcard>
+    
     @State var showDescription = false
-    var flashcard: Flashcard? {
-        model.getFlashCardsToDisplay()
-    }
+    
     var body: some View {
-        if flashcard != nil {
+        if !flashcards.isEmpty && flashcards.first != nil {
             GeometryReader { geometry in
                 VStack {
-                    FlashCardView(flashcard: flashcard!, showDescription: $showDescription)
-                    if showDescription {
+                    if flashcards.first != nil {
+                        FlashCardView(flashcard: flashcards.first!, showDescription: $showDescription)
+                    }
+                    if showDescription && flashcards.first != nil {
                         //                    Text("How did you do?")
                         //                        .font(.subheadline)
                         //                        .foregroundStyle(.gray)
                         HStack(alignment: .center) {
                             NextRepetitionButtonView(
                                 buttonText: "Wrong",
-                                nextMilestone: flashcard!.getSpacedRepetitionMilestone(),
-                                flashcardId: flashcard!.id!,
+                                nextMilestone: flashcards.first!.getSpacedRepetitionMilestone(),
+                                flashcardId: flashcards.first!.id!,
                                 width: geometry.size.width,
                                 color: .red,
                                 geometry: geometry,
@@ -35,8 +48,8 @@ struct AnkiView: View {
                             )
                             NextRepetitionButtonView(
                                 buttonText: "Correct",
-                                nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: flashcard!.getSpacedRepetitionMilestone()),
-                                flashcardId: flashcard!.id!,
+                                nextMilestone: Flashcard.SpacedRepetitionMilestoneEnum.getNext(milestone: flashcards.first!.getSpacedRepetitionMilestone()),
+                                flashcardId: flashcards.first!.id!,
                                 width:geometry.size.width,
                                 color: .orange,
                                 geometry: geometry,
@@ -45,8 +58,8 @@ struct AnkiView: View {
                             )
                             NextRepetitionButtonView(
                                 buttonText: "Easy",
-                                nextMilestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: WordAX.SpacedRepetitionMilestoneEnum.getNext(milestone: flashcard!.getSpacedRepetitionMilestone())),
-                                flashcardId: flashcard!.id!,
+                                nextMilestone: Flashcard.SpacedRepetitionMilestoneEnum.getNext(milestone: Flashcard.SpacedRepetitionMilestoneEnum.getNext(milestone: flashcards.first!.getSpacedRepetitionMilestone())),
+                                flashcardId: flashcards.first!.id!,
                                 width: geometry.size.width,
                                 color: .green,
                                 geometry: geometry,

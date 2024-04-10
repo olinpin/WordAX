@@ -24,6 +24,7 @@ struct FlashCardView: View {
                 Text("Last seen: " + model.getDateFormatter().string(from: flashcard.lastSeenOn!))
                     .font(.subheadline)
             }
+            Text("Next spaced repetition milestone: \(flashcard.nextSpacedRepetitionMilestone)")
             if showDescription {
                 flashcardText
                     .textSelection(.enabled)
@@ -47,6 +48,6 @@ struct FlashCardView: View {
 
 #Preview {
     @State var showDescription = false
-    return FlashCardView(flashcard: DataController.shared.getAllFlashcards()[0], showDescription: $showDescription)
+    return FlashCardView(flashcard: DataController().getAllFlashcards()[0], showDescription: $showDescription)
         .environmentObject(WordAXModelView())
 }

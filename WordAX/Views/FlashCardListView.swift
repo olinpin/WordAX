@@ -11,12 +11,14 @@ struct FlashCardListView: View {
     @EnvironmentObject var model: WordAXModelView
     @State var showDescription = true
     @State var addFlashcard = false
+//    @ObservedObject var flashcards = DataController.shared.getAllFlashcards()
+    @FetchRequest(sortDescriptors: []) var flashcards: FetchedResults<Flashcard>
     var body: some View {
         GeometryReader { geometry in
             NavigationSplitView {
                 Group {
-                    if !DataController.shared.getAllFlashcards().isEmpty {
-                        List(DataController.shared.getAllFlashcards()) { flashcard in
+                    if !flashcards.isEmpty {
+                        List(flashcards) { flashcard in
                             NavigationLink {
                                 FlashCardView(flashcard: flashcard, showDescription: $showDescription)
                             } label: {
@@ -44,13 +46,13 @@ struct FlashCardListView: View {
                 Text("Select word to get details about")
             }
             .sheet(isPresented: $addFlashcard, content: {
-                AddFlashCard(isShowing: $addFlashcard, addFlashCard: model.addFlashCard)
+                AddFlashCard(isShowing: $addFlashcard)
             })
         }
     }
 }
 
-#Preview {
-    FlashCardListView()
-        .environmentObject(WordAXModelView())
-}
+//#Preview {
+//    FlashCardListView()
+//        .environmentObject(WordAXModelView())
+//}

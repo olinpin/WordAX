@@ -2,7 +2,7 @@
 //  Flashcard+CoreDataProperties.swift
 //  WordAX
 //
-//  Created by Oliver Hnát on 08.04.2024.
+//  Created by Oliver Hnát on 09.04.2024.
 //
 //
 
@@ -11,6 +11,7 @@ import CoreData
 
 
 extension Flashcard {
+    // TODO: Get rid of shown and instead just use lastSeenOn == nil
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Flashcard> {
         return NSFetchRequest<Flashcard>(entityName: "Flashcard")
