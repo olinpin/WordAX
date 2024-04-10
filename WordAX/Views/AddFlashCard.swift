@@ -12,12 +12,17 @@ struct AddFlashCard: View {
     @State var description: String = ""
     @Binding var isShowing: Bool
     @Environment(\.managedObjectContext) var moc
+    @FocusState private var focus: Bool
     var body: some View {
         NavigationStack {
             List {
                 Section(header: Text("Flashcard details") ) {
                     TextField("Name", text: $text)
+                        .focused($focus)
                     TextField("Description", text: $description, axis: .vertical)
+                }
+                .onAppear {
+                    self.focus = true
                 }
             }
             .toolbar {
@@ -55,4 +60,5 @@ struct AddFlashCard: View {
 #Preview {
     @State var isShowing = true
     return AddFlashCard(isShowing: $isShowing)
+        .environment(\.managedObjectContext, DataController.preview.container.viewContext)
 }

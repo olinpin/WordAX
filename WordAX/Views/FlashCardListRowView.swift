@@ -46,16 +46,16 @@ struct FlashCardListRowView: View {
 }
 
 #Preview {
-    let fc = Flashcard()
-    fc.id = UUID()
-    fc.name = "Mesmerizing"
-    fc.desc = "Some very long description like Lorem Ipsum which I'm to lazy to copy"
+    let flashcard = try? DataController.preview.viewContext.fetch(Flashcard.fetchRequest()).first
     return Group {
-        FlashCardListRowView(flashcard: fc)
+        FlashCardListRowView(flashcard: flashcard!)
             .environmentObject(WordAXModelView())
-        FlashCardListRowView(flashcard: fc)
+            .environment(\.managedObjectContext, DataController.preview.container.viewContext)
+        FlashCardListRowView(flashcard: flashcard!)
             .environmentObject(WordAXModelView())
-        FlashCardListRowView(flashcard: fc)
+            .environment(\.managedObjectContext, DataController.preview.container.viewContext)
+        FlashCardListRowView(flashcard: flashcard!)
             .environmentObject(WordAXModelView())
+            .environment(\.managedObjectContext, DataController.preview.container.viewContext)
     }
 }

@@ -11,8 +11,7 @@ struct FlashCardListView: View {
     @EnvironmentObject var model: WordAXModelView
     @State var showDescription = true
     @State var addFlashcard = false
-//    @ObservedObject var flashcards = DataController.shared.getAllFlashcards()
-    @FetchRequest(sortDescriptors: []) var flashcards: FetchedResults<Flashcard>
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "dateAdded", ascending: false)]) var flashcards: FetchedResults<Flashcard>
     var body: some View {
         GeometryReader { geometry in
             NavigationSplitView {
@@ -52,7 +51,8 @@ struct FlashCardListView: View {
     }
 }
 
-//#Preview {
-//    FlashCardListView()
-//        .environmentObject(WordAXModelView())
-//}
+#Preview {
+    FlashCardListView()
+        .environmentObject(WordAXModelView())
+        .environment(\.managedObjectContext, DataController.preview.container.viewContext)
+}

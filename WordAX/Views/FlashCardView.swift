@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIKit
+import CoreData
 
 struct FlashCardView: View {
     var flashcard: Flashcard
@@ -47,6 +48,8 @@ struct FlashCardView: View {
 
 #Preview {
     @State var showDescription = false
-    return FlashCardView(flashcard: DataController().getAllFlashcards()[0], showDescription: $showDescription)
+    let flashcard = try? DataController.preview.viewContext.fetch(Flashcard.fetchRequest()).first
+    return FlashCardView(flashcard: flashcard!, showDescription: $showDescription)
         .environmentObject(WordAXModelView())
+        .environment(\.managedObjectContext, DataController.preview.container.viewContext)
 }

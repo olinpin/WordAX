@@ -16,4 +16,5 @@ struct SettingsView: View {
 #Preview {
     SettingsView()
         .environmentObject(WordAXModelView())
+        .environment(\.managedObjectContext, DataController.preview.container.viewContext)
 }
