@@ -108,3 +108,28 @@ class DataController: ObservableObject {
     //        return nil
     //    }
 }
+
+
+extension Int64 {
+    func convertDurationSecondsToString() -> String {
+        var result = ""
+        // Separate into days, hours, minutes and seconds and take the largest one
+        let days: Int64 = self / 86400
+        let hours: Int64 = self / 60 / 60 % 60
+        let minutes: Int64 = self / 60 % 60
+        let seconds: Int64 = self % 60
+        if days > 0 {
+            result = "\(days)d"
+        } else if hours > 0 {
+            result = "\(hours)h"
+        } else if minutes > 0 {
+            result = "\(minutes)min"
+        } else if seconds > 0 {
+            result = "\(seconds)s"
+        } else {
+            result = "\(self)"
+        }
+
+        return result
+    }
+}

@@ -36,35 +36,35 @@ struct AnkiView: View {
                         //                        .font(.subheadline)
                         //                        .foregroundStyle(.gray)
                         HStack(alignment: .center) {
-                            // TODO: Fix timeText, maybe using DateIntervallFormatter?
+                            // TODO: Maybe create an algorithm to take into account the shownCount and not just always restart from 1 min?
                             NextRepetitionButtonView(
                                 buttonText: "Wrong",
-                                nextMilestone: flashcards.first!.getSpacedRepetitionMilestone(),
+                                nextMilestone: DataController.SpacedRepetitionMilestoneEnum.OneMinute,
                                 flashcardId: flashcards.first!.id!,
                                 width: geometry.size.width,
                                 color: .red,
                                 geometry: geometry,
-                                timeText: "1m",
+                                timeText: DataController.SpacedRepetitionMilestoneEnum.OneMinute.rawValue.convertDurationSecondsToString(),
                                 showDescription: $showDescription
                             )
                             NextRepetitionButtonView(
                                 buttonText: "Correct",
-                                nextMilestone: Flashcard.SpacedRepetitionMilestoneEnum.getNext(milestone: flashcards.first!.getSpacedRepetitionMilestone()),
+                                nextMilestone: flashcards.first!.getSpacedRepetitionMilestone(),
                                 flashcardId: flashcards.first!.id!,
                                 width:geometry.size.width,
                                 color: .orange,
                                 geometry: geometry,
-                                timeText: "10m",
+                                timeText: flashcards.first!.getSpacedRepetitionMilestone().rawValue.convertDurationSecondsToString(),
                                 showDescription: $showDescription
                             )
                             NextRepetitionButtonView(
                                 buttonText: "Easy",
-                                nextMilestone: Flashcard.SpacedRepetitionMilestoneEnum.getNext(milestone: Flashcard.SpacedRepetitionMilestoneEnum.getNext(milestone: flashcards.first!.getSpacedRepetitionMilestone())),
+                                nextMilestone: Flashcard.SpacedRepetitionMilestoneEnum.getNext(milestone: flashcards.first!.getSpacedRepetitionMilestone()),
                                 flashcardId: flashcards.first!.id!,
                                 width: geometry.size.width,
                                 color: .green,
                                 geometry: geometry,
-                                timeText: "1h",
+                                timeText: Flashcard.SpacedRepetitionMilestoneEnum.getNext(milestone: flashcards.first!.getSpacedRepetitionMilestone()).rawValue.convertDurationSecondsToString(),
                                 showDescription: $showDescription
                             )
                         }

@@ -28,16 +28,16 @@ public class Flashcard: NSManagedObject {
             allCases.sorted {$0.rawValue < $1.rawValue }
         }
         
-        static func getNext(milestone: SpacedRepetitionMilestoneEnum?) -> SpacedRepetitionMilestoneEnum? {
+        static func getNext(milestone: SpacedRepetitionMilestoneEnum?) -> SpacedRepetitionMilestoneEnum {
             let sorted = SpacedRepetitionMilestoneEnum.allCasesSorted
             if milestone == nil {
-                return sorted.first
+                return SpacedRepetitionMilestoneEnum.TenMinutes
             }
             let milestoneIndex = sorted.firstIndex(where: {$0.rawValue == milestone!.rawValue})!
             if milestoneIndex < SpacedRepetitionMilestoneEnum.allCasesSorted.count {
                 return sorted[milestoneIndex + 1]
             }
-            return nil
+            return SpacedRepetitionMilestoneEnum.OneYear
         }
 
         static func getMilestoneFromInt(value: Int64) -> SpacedRepetitionMilestoneEnum {

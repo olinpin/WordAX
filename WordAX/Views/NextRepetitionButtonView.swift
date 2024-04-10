@@ -39,7 +39,7 @@ struct NextRepetitionButtonView: View {
             }) {
                 VStack {
                     Text(buttonText)
-                    Text(">" + timeText)
+                    Text(timeText)
                         .font(.footnote)
                         .bold()
                 }
