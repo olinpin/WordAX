@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct NextRepetitionButtonView: View {
     let buttonText: String
@@ -15,14 +16,25 @@ struct NextRepetitionButtonView: View {
     let color: Color
     let geometry: GeometryProxy
     let timeText: String
+    @Environment(\.managedObjectContext) var moc
 //            { colorScheme == .light ? .cyan : .darkCyan }
     @Binding var showDescription: Bool
     @EnvironmentObject var model: WordAXModelView
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
             Button(action: {
-                // TODO: Fix this anki button clicked function
-//                model.ankiButtonClicked(flashcardId: flashcardId, milestone: nextMilestone)
+                let request = NSFetchRequest<Flashcard>(entityName: "Flashcard")
+                request.predicate = NSPredicate(format: "id == %@", flashcardId as CVarArg)
+                do {
+                    let result = try moc.fetch(request)
+                    let flashcard = result.first
+                    flashcard?.lastSeenOn = Date()
+                    flashcard?.nextSpacedRepetitionMilestone = nextMilestone?.rawValue ?? 0
+                    flashcard?.shownCount += 1
+                    try moc.save()
+                } catch {
+                    print("Something went wrong while saving the flashcard info: \(error.localizedDescription)")
+                }
                 self.showDescription = false
             }) {
                 VStack {

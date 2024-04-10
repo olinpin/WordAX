@@ -24,7 +24,6 @@ struct FlashCardView: View {
                 Text("Last seen: " + model.getDateFormatter().string(from: flashcard.lastSeenOn!))
                     .font(.subheadline)
             }
-            Text("Next spaced repetition milestone: \(flashcard.nextSpacedRepetitionMilestone)")
             if showDescription {
                 flashcardText
                     .textSelection(.enabled)
