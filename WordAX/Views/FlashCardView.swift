@@ -20,7 +20,7 @@ struct FlashCardView: View {
             .font(.title)
             .bold()
         VStack {
-            if flashcard.shown && flashcard.lastSeenOn != nil {
+            if flashcard.lastSeenOn != nil {
                 Text("Last seen: " + model.getDateFormatter().string(from: flashcard.lastSeenOn!))
                     .font(.subheadline)
             }

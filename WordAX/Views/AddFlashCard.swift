@@ -35,7 +35,6 @@ struct AddFlashCard: View {
                         flashcard.id = UUID()
                         flashcard.name = self.text
                         flashcard.desc = self.description
-                        flashcard.shown = false
                         flashcard.nextSpacedRepetitionMilestone = 0
                         flashcard.lastSeenOn = nil
                         flashcard.shownCount = 0

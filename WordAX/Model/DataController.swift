@@ -26,56 +26,6 @@ class DataController: ObservableObject {
         }
     }
     
-    //    public func addFlashcard(name: String, description: String) {
-    public func addFlashcard(name: String, description: String) {
-        let flashcard = Flashcard(context: viewContext)
-        flashcard.id = UUID()
-        flashcard.name = name
-        flashcard.desc = description
-        flashcard.shown = false
-        flashcard.nextSpacedRepetitionMilestone = 0
-        flashcard.lastSeenOn = nil
-        flashcard.shownCount = 0
-        flashcard.dateAdded = Date()
-        try? viewContext.save()
-    }
-    
-    // TODO: Figure out if this does anything?
-    public func setNextSpacedRepetitionMilestone(flashcard: Flashcard) {
-        let current = SpacedRepetitionMilestoneEnum.allCasesSorted.firstIndex(of: flashcard.getSpacedRepetitionMilestone()) ?? SpacedRepetitionMilestoneEnum.allCases.count
-        let predicate = NSPredicate(format: "id == %@", flashcard.id! as CVarArg)
-        let flashcards = self.getAllFlashcards(predicate: predicate)
-        if !flashcards.isEmpty {
-            if current + 1 < SpacedRepetitionMilestoneEnum.allCases.count {
-                flashcards[0].nextSpacedRepetitionMilestone = SpacedRepetitionMilestoneEnum.allCasesSorted[current + 1].rawValue
-            }
-        }
-    }
-    
-    public func setSpacedRepetitionMilestone(flashcardId: UUID, milestone: SpacedRepetitionMilestoneEnum?) {
-        let predicate = NSPredicate(format: "id == %@", flashcardId as CVarArg)
-        let flashcards = self.getAllFlashcards(predicate: predicate)
-        if !flashcards.isEmpty {
-            if milestone != nil {
-                flashcards[0].nextSpacedRepetitionMilestone = milestone!.rawValue
-            } else {
-                flashcards[0].nextSpacedRepetitionMilestone = 0
-            }
-            if !flashcards[0].shown {
-                flashcards[0].shown = true
-            }
-            flashcards[0].lastSeenOn = Date()
-        }
-    }
-    
-    public func flashcardShown(flashcardId: UUID) {
-        let predicate = NSPredicate(format: "id == %@", flashcardId as CVarArg)
-        let flashcards = self.getAllFlashcards(predicate: predicate)
-        if !flashcards.isEmpty {
-            flashcards[0].shownCount += 1
-            try? viewContext.save()
-        }
-    }
     
     public func getAllFlashcards(predicate: NSPredicate? = nil) -> [Flashcard]{
         let request = NSFetchRequest<Flashcard>(entityName: "Flashcard")

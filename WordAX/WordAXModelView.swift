@@ -30,12 +30,6 @@ class WordAXModelView: ObservableObject {
     public func getDateFormatter() -> DateFormatter {
         self.settings.dateFormatter
     }
-    
-    
-    public func ankiButtonClicked(flashcardId: UUID, milestone: Flashcard.SpacedRepetitionMilestoneEnum?, moc: DataController) {
-        moc.setSpacedRepetitionMilestone(flashcardId: flashcardId, milestone: milestone)
-        moc.flashcardShown(flashcardId: flashcardId)
-    }
 }
 
 
