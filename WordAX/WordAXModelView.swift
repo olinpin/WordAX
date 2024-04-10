@@ -14,8 +14,9 @@ class WordAXModelView: ObservableObject {
     let settings: Settings
     
     init() {
+        let hourString = DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: NSLocale.current)
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/YYYY"
+        dateFormatter.dateFormat = "dd/MM/YYYY \(hourString?.contains("a") ?? true ? "hh" : "HH"):mm\(hourString?.contains("a") ?? true ? " a" : "")"
         self.settings = Settings(dateFormatter: dateFormatter)
     }
     

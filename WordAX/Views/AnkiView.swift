@@ -36,6 +36,7 @@ struct AnkiView: View {
                         //                        .font(.subheadline)
                         //                        .foregroundStyle(.gray)
                         HStack(alignment: .center) {
+                            // TODO: Fix timeText, maybe using DateIntervallFormatter?
                             NextRepetitionButtonView(
                                 buttonText: "Wrong",
                                 nextMilestone: flashcards.first!.getSpacedRepetitionMilestone(),

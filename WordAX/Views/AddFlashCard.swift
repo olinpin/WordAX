@@ -36,15 +36,7 @@ struct AddFlashCard: View {
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button(action: {
-                        let flashcard = Flashcard(context: moc)
-                        flashcard.id = UUID()
-                        flashcard.name = self.text
-                        flashcard.desc = self.description
-                        flashcard.nextSpacedRepetitionMilestone = 0
-                        flashcard.lastSeenOn = nil
-                        flashcard.shownCount = 0
-                        flashcard.dateAdded = Date()
-                        try? moc.save()
+                        self.createFlashcard()
                         self.isShowing = false
                     }, label: {
                         Text("Create")
@@ -54,6 +46,19 @@ struct AddFlashCard: View {
             }
             .navigationTitle("Add Flashcard")
         }
+    }
+    
+    private func createFlashcard() {
+        let flashcard = Flashcard(context: moc)
+        flashcard.id = UUID()
+        flashcard.name = self.text
+        flashcard.desc = self.description
+        flashcard.nextSpacedRepetitionMilestone = 0
+        flashcard.lastSeenOn = nil
+        flashcard.shownCount = 0
+        flashcard.dateAdded = Date()
+        try? moc.save()
+
     }
 }
 

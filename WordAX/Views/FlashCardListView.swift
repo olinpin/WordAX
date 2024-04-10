@@ -12,17 +12,27 @@ struct FlashCardListView: View {
     @State var showDescription = true
     @State var addFlashcard = false
     @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "dateAdded", ascending: false)]) var flashcards: FetchedResults<Flashcard>
+    @Environment(\.managedObjectContext) var moc
     var body: some View {
         GeometryReader { geometry in
             NavigationSplitView {
                 Group {
                     if !flashcards.isEmpty {
-                        List(flashcards) { flashcard in
-                            NavigationLink {
-                                FlashCardView(flashcard: flashcard, showDescription: $showDescription)
-                            } label: {
-                                FlashCardListRowView(flashcard: flashcard)
+                        List {
+                            ForEach(flashcards) { flashcard in
+                                NavigationLink {
+                                    FlashCardView(flashcard: flashcard, showDescription: $showDescription)
+                                } label: {
+                                    FlashCardListRowView(flashcard: flashcard)
+                                }
                             }
+                            .onDelete(perform: { offsets in
+                                for index in offsets {
+                                    let flashcard = flashcards[index]
+                                    moc.delete(flashcard)
+                                }
+                                
+                            })
                         }
                     }
                     else {
@@ -35,6 +45,7 @@ struct FlashCardListView: View {
                 }
                 .navigationTitle("All Flashcards")
                 .toolbar {
+                    EditButton()
                     Button(action: {
                         self.addFlashcard = true
                     }) {

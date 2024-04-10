@@ -21,11 +21,17 @@ struct FlashCardView: View {
             .font(.title)
             .bold()
         VStack {
+            // TODO: Figure out if this and create/edit menu could be more similar?
             if flashcard.lastSeenOn != nil {
                 Text("Last seen: " + model.getDateFormatter().string(from: flashcard.lastSeenOn!))
                     .font(.subheadline)
             }
             if showDescription {
+                // TODO: Add more information here
+                if flashcard.shownCount != 0 {
+                    Text("Already seen: \(flashcard.shownCount) \(flashcard.shownCount == 1 ? "time" : "times")")
+                        .padding(.bottom)
+                }
                 flashcardText
                     .textSelection(.enabled)
                 Divider()
@@ -47,7 +53,7 @@ struct FlashCardView: View {
 }
 
 #Preview {
-    @State var showDescription = false
+    @State var showDescription = true
     let flashcard = try? DataController.preview.viewContext.fetch(Flashcard.fetchRequest()).first
     return FlashCardView(flashcard: flashcard!, showDescription: $showDescription)
         .environmentObject(WordAXModelView())
