@@ -29,8 +29,8 @@ class DataController: ObservableObject {
                 "This is a very short description",
                 "This is a medium length description that should be long enough to cover all cases"
             ].randomElement()!
-            flashcard.nextSpacedRepetitionMilestone = SpacedRepetitionMilestoneEnum.allCases.randomElement()!.rawValue
-            flashcard.lastSeenOn  = [nil, Date(), Date().addingTimeInterval([-86400, -24000, -100000].randomElement()!)].randomElement()!
+            flashcard.nextSpacedRepetitionMilestone = SpacedRepetitionMilestoneEnum.OneYear.rawValue
+            flashcard.lastSeenOn  = [Date().addingTimeInterval([86400, 24000, 100000].randomElement()!)].randomElement()!
             flashcard.shownCount = [0, 1, 2, 3, 4, 5].randomElement()!
             flashcard.dateAdded = [Date(), Date().addingTimeInterval(-86400), Date().addingTimeInterval(-172800)].randomElement()!
         }
@@ -70,43 +70,6 @@ class DataController: ObservableObject {
             return []
         }
     }
-    
-    //    public func getFlashCardsToDisplay() -> Flashcard? {
-    //        let flashcards = self.getAllFlashcards()
-    //
-    //        if flashcards.count > 0 {
-    //            let notShownFlashCards = flashcards.filter({!$0.shown})
-    //            // if today is the date they're supposed to be shown
-    //
-    //            let displayToday = flashcards.filter({
-    //                $0.lastSeenOn != nil &&
-    //                $0.lastSeenOn!.addSpacedRepetitionMilestone(
-    //                    milestone: SpacedRepetitionMilestoneEnum.getMilestoneFromInt(
-    //                            value: $0.nextSpacedRepetitionMilestone))
-    //                                .isBeforeTodayOrToday()
-    //            })
-    //            if  displayToday.count > 0 {
-    //                return displayToday.first!
-    //            }
-    //
-    ////            let shownWords = words.filter({ $0.shown })
-    ////            if shownWords.count == 0 {
-    //            if notShownFlashCards.count == 0 {
-    //                return nil
-    //            }
-    //            return notShownFlashCards.sorted(by: {$0.id < $1.id}).first
-    ////            }
-    //            // if today is the day to show a new word
-    ////            let settings = model.settings
-    ////            if shownWords.count == 0 ||
-    ////                settings.lastShownNew == nil ||
-    ////                settings.lastShownNew!.addFrequency(frequency: settings.frequency).isAfterToday() {
-    ////                return words.first!
-    ////            }
-    //        }
-    //        // otherwise show nothing
-    //        return nil
-    //    }
 }
 
 
@@ -131,5 +94,34 @@ extension Int64 {
         }
 
         return result
+    }
+}
+
+extension Int {
+    func convertDurationSecondsToCountdown() -> String {
+        var result = ""
+        // Separate into days, hours, minutes and seconds and take the largest one
+        let days: Int = self / 86400
+        let hours: Int = self / 60 / 60 % 60
+        let minutes: Int = self / 60 % 60
+        let seconds: Int = self % 60
+        if days > 0 {
+            result += "\(days)d"
+        }
+        if hours > 0 {
+            result += " \(hours)h"
+        }
+        if minutes > 0 {
+            result += " \(minutes)min"
+        }
+        if seconds > 0 {
+            result += " \(seconds)s"
+        }
+//        else {
+//            result = "\(self)"
+//        }
+        
+        return result
+        
     }
 }

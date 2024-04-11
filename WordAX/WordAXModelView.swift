@@ -68,7 +68,7 @@ extension Date {
         if milestone == nil {
             return self
         }
-        return self.addingTimeInterval(TimeInterval(milestone!.rawValue * 24 * 60 * 60))
+        return self.addingTimeInterval(TimeInterval(milestone!.rawValue))
     }
     
     func isAfterToday() -> Bool {

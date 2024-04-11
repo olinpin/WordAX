@@ -39,14 +39,28 @@ public class Flashcard: NSManagedObject {
             }
             return SpacedRepetitionMilestoneEnum.OneYear
         }
-
+        
         static func getMilestoneFromInt(value: Int64) -> SpacedRepetitionMilestoneEnum {
             return SpacedRepetitionMilestoneEnum.allCasesSorted.first(where: {$0.rawValue == value}) ?? SpacedRepetitionMilestoneEnum.Now
         }
         
     }
     
-
+    public override func didChangeValue(forKey key: String) {
+        super.didChangeValue(forKey: key)
+        if key == "lastSeenOn" || key == "nextSpacedRepetitionMilestone" {
+            //            updateCalculatedNextRepetition()
+            calculatedNextRepetition = lastSeenOn ?? Date() + TimeInterval(nextSpacedRepetitionMilestone)
+        }
+    }
+    
+    //    func updateCalculatedNextRepetition() {
+    //        if let lastSeen = lastSeenOn {
+    //            calculatedNextRepetition = Calendar.current.date(byAdding: .day, value: Int(nextSpacedRepetitionMilestone), to: lastSeen)
+    //        }
+    //    }
+    
+    
     func getSpacedRepetitionMilestone() -> SpacedRepetitionMilestoneEnum {
         return SpacedRepetitionMilestoneEnum.getMilestoneFromInt(value: self.nextSpacedRepetitionMilestone)
     }

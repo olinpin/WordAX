@@ -19,7 +19,7 @@
 		6CEF7F7D2BC457E600E205F6 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEF7F7C2BC457E600E205F6 /* DataController.swift */; };
 		6CEF7F812BC4694900E205F6 /* WordAXCD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6CEF7F7F2BC4694900E205F6 /* WordAXCD.xcdatamodeld */; };
 		6CEF7F842BC46B5900E205F6 /* Flashcard+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEF7F822BC46B5900E205F6 /* Flashcard+CoreDataClass.swift */; };
-		6CEF7F9E2BC6B4F100E205F6 /* Flashcard+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEF7F9C2BC6B4F100E205F6 /* Flashcard+CoreDataProperties.swift */; };
+		6CEF7FA32BC88F6000E205F6 /* Flashcard+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEF7FA12BC88F6000E205F6 /* Flashcard+CoreDataProperties.swift */; };
 		6CF439522B83541D004C3543 /* WordAXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF439512B83541D004C3543 /* WordAXApp.swift */; };
 		6CF439542B83541D004C3543 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF439532B83541D004C3543 /* MainView.swift */; };
 		6CF439562B83541E004C3543 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CF439552B83541E004C3543 /* Assets.xcassets */; };
@@ -40,7 +40,8 @@
 		6CEF7F802BC4694900E205F6 /* WordAX.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WordAX.xcdatamodel; sourceTree = "<group>"; };
 		6CEF7F822BC46B5900E205F6 /* Flashcard+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flashcard+CoreDataClass.swift"; sourceTree = "<group>"; };
 		6CEF7F962BC6B45F00E205F6 /* WordAX0.0.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WordAX0.0.1.xcdatamodel; sourceTree = "<group>"; };
-		6CEF7F9C2BC6B4F100E205F6 /* Flashcard+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Flashcard+CoreDataProperties.swift"; path = "../../Flashcard+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		6CEF7F9F2BC88F3900E205F6 /* WordAX0.0.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WordAX0.0.2.xcdatamodel; sourceTree = "<group>"; };
+		6CEF7FA12BC88F6000E205F6 /* Flashcard+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flashcard+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6CF4394E2B83541D004C3543 /* WordAX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordAX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CF439512B83541D004C3543 /* WordAXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordAXApp.swift; sourceTree = "<group>"; };
 		6CF439532B83541D004C3543 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -80,7 +81,7 @@
 				6CEF7F7C2BC457E600E205F6 /* DataController.swift */,
 				6CEF7F7F2BC4694900E205F6 /* WordAXCD.xcdatamodeld */,
 				6CEF7F822BC46B5900E205F6 /* Flashcard+CoreDataClass.swift */,
-				6CEF7F9C2BC6B4F100E205F6 /* Flashcard+CoreDataProperties.swift */,
+				6CEF7FA12BC88F6000E205F6 /* Flashcard+CoreDataProperties.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -197,7 +198,7 @@
 				6CF439542B83541D004C3543 /* MainView.swift in Sources */,
 				6C8185082B8B523E0033CF46 /* NextRepetitionButtonView.swift in Sources */,
 				6C8185062B8A537F0033CF46 /* FlashCardView.swift in Sources */,
-				6CEF7F9E2BC6B4F100E205F6 /* Flashcard+CoreDataProperties.swift in Sources */,
+				6CEF7FA32BC88F6000E205F6 /* Flashcard+CoreDataProperties.swift in Sources */,
 				6C81850A2B8BA5740033CF46 /* FlashCardListView.swift in Sources */,
 				6C8185002B88C9660033CF46 /* WordAXModelView.swift in Sources */,
 				6C8185042B88CA210033CF46 /* AnkiView.swift in Sources */,
@@ -418,6 +419,7 @@
 		6CEF7F7F2BC4694900E205F6 /* WordAXCD.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				6CEF7F9F2BC88F3900E205F6 /* WordAX0.0.2.xcdatamodel */,
 				6CEF7F962BC6B45F00E205F6 /* WordAX0.0.1.xcdatamodel */,
 				6CEF7F802BC4694900E205F6 /* WordAX.xcdatamodel */,
 			);
