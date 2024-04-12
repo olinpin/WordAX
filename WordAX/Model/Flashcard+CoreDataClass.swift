@@ -11,6 +11,25 @@ import CoreData
 
 @objc(Flashcard)
 public class Flashcard: NSManagedObject {
+    
+    @objc dynamic var calculatedNextRepetition: Date {
+        if lastSeenOn != nil {
+            return lastSeenOn!.addSpacedRepetitionMilestone(milestone: self.getSpacedRepetitionMilestone())
+        } else {
+            return Date()
+        }
+    }
+    override public class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+//    public override func value(forKey key: String) -> Any? {
+        let keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
+        if key == "calculatedNextRepetition" {
+            return keyPaths.union(Set(["lastSeenOn", "nextSpacedRepetitionMilestone"]))
+        } else {
+            return keyPaths
+        }
+    }
+    
+
     enum SpacedRepetitionMilestoneEnum: Int64, CaseIterable {
         case Now = 0 // starting value
         case OneMinute = 60 // 60 * 1
@@ -31,28 +50,28 @@ public class Flashcard: NSManagedObject {
         static func getNext(milestone: SpacedRepetitionMilestoneEnum?) -> SpacedRepetitionMilestoneEnum {
             let sorted = SpacedRepetitionMilestoneEnum.allCasesSorted
             if milestone == nil {
-                return SpacedRepetitionMilestoneEnum.TenMinutes
+                return .TenMinutes
             }
             let milestoneIndex = sorted.firstIndex(where: {$0.rawValue == milestone!.rawValue})!
             if milestoneIndex < SpacedRepetitionMilestoneEnum.allCasesSorted.count {
                 return sorted[milestoneIndex + 1]
             }
-            return SpacedRepetitionMilestoneEnum.OneYear
+            return .OneYear
         }
         
         static func getMilestoneFromInt(value: Int64) -> SpacedRepetitionMilestoneEnum {
-            return SpacedRepetitionMilestoneEnum.allCasesSorted.first(where: {$0.rawValue == value}) ?? SpacedRepetitionMilestoneEnum.Now
+            return .allCasesSorted.first(where: {$0.rawValue == value}) ?? .Now
         }
         
     }
     
-    public override func didChangeValue(forKey key: String) {
-        super.didChangeValue(forKey: key)
-        if key == "lastSeenOn" || key == "nextSpacedRepetitionMilestone" {
-            //            updateCalculatedNextRepetition()
-            calculatedNextRepetition = lastSeenOn ?? Date() + TimeInterval(nextSpacedRepetitionMilestone)
-        }
-    }
+//    public override func didChangeValue(forKey key: String) {
+//        super.didChangeValue(forKey: key)
+//        if key == "lastSeenOn" || key == "nextSpacedRepetitionMilestone" {
+//            //            updateCalculatedNextRepetition()
+//            calculatedNextRepetition = lastSeenOn ?? Date() + TimeInterval(nextSpacedRepetitionMilestone)
+//        }
+//    }
     
     //    func updateCalculatedNextRepetition() {
     //        if let lastSeen = lastSeenOn {

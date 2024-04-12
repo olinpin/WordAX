@@ -24,8 +24,6 @@ extension Flashcard {
     @NSManaged public var nextSpacedRepetitionMilestone: Int64
     @NSManaged public var shown: Bool
     @NSManaged public var shownCount: Int64
-    @NSManaged public var calculatedNextRepetition: Date?
-
 }
 
 extension Flashcard : Identifiable {
