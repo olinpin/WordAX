@@ -29,11 +29,10 @@ class DataController: ObservableObject {
                 "This is a very short description",
                 "This is a medium length description that should be long enough to cover all cases"
             ].randomElement()!
-            flashcard.nextSpacedRepetitionMilestone = SpacedRepetitionMilestoneEnum.OneYear.rawValue
-            flashcard.lastSeenOn  = [Date().addingTimeInterval([86400, 24000, 100000].randomElement()!)].randomElement()!
+            flashcard.nextSpacedRepetitionMilestone = SpacedRepetitionMilestoneEnum.allCases.randomElement()!.rawValue
+            flashcard.lastSeenOn  = [nil, Date(), Date().addingTimeInterval([-86400, -24000, -100000].randomElement()!)].randomElement()!
             flashcard.shownCount = [0, 1, 2, 3, 4, 5].randomElement()!
             flashcard.dateAdded = [Date(), Date().addingTimeInterval(-86400), Date().addingTimeInterval(-172800)].randomElement()!
-//            flashcard.calculatedNextRepetition = flashcard.lastSeenOn ?? Date() + TimeInterval(flashcard.nextSpacedRepetitionMilestone)
         }
         do {
             try viewContext.save()

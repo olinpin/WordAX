@@ -11,6 +11,8 @@ import CoreData
 struct AnkiView: View {
     @EnvironmentObject var model: WordAXModelView
     @Environment(\.managedObjectContext) var moc
+    
+    // get flashcards to display
     @FetchRequest(sortDescriptors: [
         NSSortDescriptor(key: "nextSpacedRepetitionMilestone", ascending: false),
         NSSortDescriptor(key: "lastSeenOn", ascending: true)
@@ -22,19 +24,16 @@ struct AnkiView: View {
         NSPredicate(format: "lastSeenOn == nil")
     ])) var flashcards: FetchedResults<Flashcard>
     
+    // get the most recent flashcard
+    @FetchRequest(sortDescriptors: [],
+                  predicate: NSPredicate(format: "%K != nil", "lastSeenOn")) var soonestFlashcard: FetchedResults<Flashcard>
+    
     @State private var timeRemaining = 10
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State var sortedFlashcards: [Flashcard] = []
+    @State var showDescription = false
     
     @Environment(\.colorScheme) var colorScheme
-
-    
-    // get the most recent flashcard
-    @FetchRequest(sortDescriptors: [],
-          predicate: NSPredicate(format: "%K != nil", "lastSeenOn")) var soonestFlashcard: FetchedResults<Flashcard>
-
-    
-    @State var showDescription = false
     
     var body: some View {
         if !flashcards.isEmpty && flashcards.first != nil {
@@ -47,67 +46,39 @@ struct AnkiView: View {
                         //                    Text("How did you do?")
                         //                        .font(.subheadline)
                         //                        .foregroundStyle(.gray)
-                        HStack(alignment: .center) {
-                            // TODO: Maybe create an algorithm to take into account the shownCount and not just always restart from 1 min?
-                            NextRepetitionButtonView(
-                                buttonText: "Wrong",
-                                nextMilestone: DataController.SpacedRepetitionMilestoneEnum.OneMinute,
-                                flashcardId: flashcards.first!.id!,
-                                width: geometry.size.width,
-                                color: .red,
-                                geometry: geometry,
-                                timeText: DataController.SpacedRepetitionMilestoneEnum.OneMinute.rawValue.convertDurationSecondsToString(),
-                                showDescription: $showDescription
-                            )
-                            NextRepetitionButtonView(
-                                buttonText: "Correct",
-                                nextMilestone: flashcards.first!.getSpacedRepetitionMilestone(),
-                                flashcardId: flashcards.first!.id!,
-                                width:geometry.size.width,
-                                color: .orange,
-                                geometry: geometry,
-                                timeText: flashcards.first!.getSpacedRepetitionMilestone().rawValue.convertDurationSecondsToString(),
-                                showDescription: $showDescription
-                            )
-                            NextRepetitionButtonView(
-                                buttonText: "Easy",
-                                nextMilestone: Flashcard.SpacedRepetitionMilestoneEnum.getNext(milestone: flashcards.first!.getSpacedRepetitionMilestone()),
-                                flashcardId: flashcards.first!.id!,
-                                width: geometry.size.width,
-                                color: .green,
-                                geometry: geometry,
-                                timeText: Flashcard.SpacedRepetitionMilestoneEnum.getNext(milestone: flashcards.first!.getSpacedRepetitionMilestone()).rawValue.convertDurationSecondsToString(),
-                                showDescription: $showDescription
-                            )
-                        }
-                        .padding([.bottom, .trailing, .leading])
+                        ButtonHStackView(flashcard: flashcards.first!, geometry: geometry, showDescription: $showDescription)
+                            .padding([.bottom, .trailing, .leading])
                     }
                 }
             }
         } else {
             if !soonestFlashcard.isEmpty {
-                Text("Next flashcard in: \(timeRemaining.convertDurationSecondsToCountdown())")
-                    .foregroundStyle(.black)
-                    .padding()
-                    .background(.yellow)
-                    .clipShape(.buttonBorder)
-                    .padding(.vertical, 50)
-                    .padding(.horizontal)
-                    .background(.gray.opacity(0.3))
-                    .clipShape(.buttonBorder)
-                    .onAppear {
-                        if !soonestFlashcard.isEmpty {
-                            sortedFlashcards = soonestFlashcard.sorted(by: {
-                                ($0.lastSeenOn!.addSpacedRepetitionMilestone(milestone:$0.getSpacedRepetitionMilestone()).timeIntervalSinceNow) < ($1.lastSeenOn!.addSpacedRepetitionMilestone(milestone: $1.getSpacedRepetitionMilestone()).timeIntervalSinceNow)
-                            })
-                            timeRemaining = Int(sortedFlashcards.first!.lastSeenOn!.addSpacedRepetitionMilestone(milestone:sortedFlashcards.first!.getSpacedRepetitionMilestone()).timeIntervalSinceNow)
+                Group {
+                    Text("Next flashcard in: \(timeRemaining.convertDurationSecondsToCountdown())")
+                        .foregroundStyle(.black)
+                        .padding()
+                        .frame(maxWidth: .infinity - 50)
+                        .background(.yellow)
+                        .clipShape(.buttonBorder)
+                        .padding(.vertical, 50)
+                        .padding(.horizontal)
+                        .onAppear {
+                            if !soonestFlashcard.isEmpty {
+                                sortedFlashcards = soonestFlashcard.sorted(by: {
+                                    ($0.lastSeenOn!.addSpacedRepetitionMilestone(milestone:$0.getSpacedRepetitionMilestone()).timeIntervalSinceNow) < ($1.lastSeenOn!.addSpacedRepetitionMilestone(milestone: $1.getSpacedRepetitionMilestone()).timeIntervalSinceNow)
+                                })
+                                timeRemaining = Int(sortedFlashcards.first!.lastSeenOn!.addSpacedRepetitionMilestone(milestone:sortedFlashcards.first!.getSpacedRepetitionMilestone()).timeIntervalSinceNow)
+                            }
                         }
-                    }
-                    .onReceive(timer) { time in
-                        if timeRemaining > 0 {
-                            timeRemaining -= 1
+                        .onReceive(timer) { time in
+                            if timeRemaining > 0 {
+                                timeRemaining -= 1
+                            }
                         }
-                    }
+                        .background(.gray.opacity(0.3))
+                        .clipShape(.buttonBorder)
+                        .padding(.horizontal)
+                }
             }
         }
     }

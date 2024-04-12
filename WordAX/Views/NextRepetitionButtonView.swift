@@ -12,7 +12,6 @@ struct NextRepetitionButtonView: View {
     let buttonText: String
     let nextMilestone: Flashcard.SpacedRepetitionMilestoneEnum?
     let flashcardId: UUID
-    let width: CGFloat
     let color: Color
     let geometry: GeometryProxy
     let timeText: String
@@ -45,7 +44,7 @@ struct NextRepetitionButtonView: View {
                 }
                 .padding(.vertical, geometry.size.height / 80)
                 .foregroundColor(.black)
-                .frame(maxWidth: width)
+                .frame(maxWidth: geometry.size.width)
             }
             .background(color)
             .buttonStyle(.plain)
