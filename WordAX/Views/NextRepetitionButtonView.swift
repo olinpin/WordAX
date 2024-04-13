@@ -18,7 +18,6 @@ struct NextRepetitionButtonView: View {
     @Environment(\.managedObjectContext) var moc
 //            { colorScheme == .light ? .cyan : .darkCyan }
     @Binding var showDescription: Bool
-    @EnvironmentObject var model: WordAXModelView
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
             Button(action: {

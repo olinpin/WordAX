@@ -60,10 +60,6 @@ extension Date {
         return selfDate.year! < paramDate.year! || selfDate.month! < paramDate.month! || selfDate.day! < paramDate.day!
     }
     
-//    func addFrequency(frequency: WordAX.FrequencyEnum) -> Date {
-//        self.addingTimeInterval(TimeInterval(frequency.rawValue * 24 * 60 * 60))
-//    }
-    
     func addSpacedRepetitionMilestone(milestone: Flashcard.SpacedRepetitionMilestoneEnum?) -> Date {
         if milestone == nil {
             return self
