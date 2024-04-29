@@ -10,6 +10,7 @@ import SwiftUI
 struct ButtonHStackView: View {
     let flashcard: Flashcard
     let geometry: GeometryProxy
+    let reload: () -> Void
     @Binding var showDescription: Bool
     var body: some View {
         HStack(alignment: .center) {
@@ -21,6 +22,7 @@ struct ButtonHStackView: View {
                 color: .red,
                 geometry: geometry,
                 timeText: DataController.SpacedRepetitionMilestoneEnum.OneMinute.rawValue.convertDurationSecondsToString(),
+                reload: reload,
                 showDescription: $showDescription
             )
             NextRepetitionButtonView(
@@ -30,6 +32,7 @@ struct ButtonHStackView: View {
                 color: .orange,
                 geometry: geometry,
                 timeText: flashcard.getSpacedRepetitionMilestone().rawValue.convertDurationSecondsToString(),
+                reload: reload,
                 showDescription: $showDescription
             )
             NextRepetitionButtonView(
@@ -39,6 +42,7 @@ struct ButtonHStackView: View {
                 color: .green,
                 geometry: geometry,
                 timeText: Flashcard.SpacedRepetitionMilestoneEnum.getNext(milestone: flashcard.getSpacedRepetitionMilestone()).rawValue.convertDurationSecondsToString(),
+                reload: reload,
                 showDescription: $showDescription
             )
         }

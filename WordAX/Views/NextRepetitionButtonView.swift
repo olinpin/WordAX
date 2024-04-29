@@ -15,6 +15,7 @@ struct NextRepetitionButtonView: View {
     let color: Color
     let geometry: GeometryProxy
     let timeText: String
+    let reload: () -> Void
     @Environment(\.managedObjectContext) var moc
 //            { colorScheme == .light ? .cyan : .darkCyan }
     @Binding var showDescription: Bool
@@ -34,6 +35,7 @@ struct NextRepetitionButtonView: View {
                     print("Something went wrong while saving the flashcard info: \(error.localizedDescription)")
                 }
                 self.showDescription = false
+                reload()
             }) {
                 VStack {
                     Text(buttonText)

@@ -35,6 +35,7 @@ public class Flashcard: NSManagedObject {
             }
             let milestoneIndex = sorted.firstIndex(where: {$0.rawValue == milestone!.rawValue})!
             if milestoneIndex < sorted.count {
+                // 1 minute is only if answer was wrong, so 10 minutes is the first valid milestone
                 return sorted[milestoneIndex + 1] == .OneMinute ? .TenMinutes : sorted[milestoneIndex + 1]
             }
             return .OneYear
@@ -47,7 +48,6 @@ public class Flashcard: NSManagedObject {
     }
     
     func getSpacedRepetitionMilestone() -> SpacedRepetitionMilestoneEnum {
-        let milestone = SpacedRepetitionMilestoneEnum.getMilestoneFromInt(value: self.nextSpacedRepetitionMilestone)
-        return milestone == .OneMinute ? .TenMinutes : milestone
+        SpacedRepetitionMilestoneEnum.getMilestoneFromInt(value: self.nextSpacedRepetitionMilestone)
     }
 }

@@ -56,6 +56,7 @@ Why settle for pricey apps when you can have WordAX? We're here to prove that ef
 
 ## Roadmap
 - [ ] Anki card "store" - download any anki flashcards you want from the online store that already exists somewhere
+    - [ ] Export your anki to the store?
 - [ ] Import anki cards in the .anki format
 - [x] Create flashcards
 - [ ] Add tags to cards
@@ -65,8 +66,7 @@ Why settle for pricey apps when you can have WordAX? We're here to prove that ef
 	- [x] For start store them on the phone - stored using Core Data
 	- [ ] Maybe later add a storage in cloud, so that you can sync with other devices if the app is multi-platform?
 - [ ] Add some animations?
-- [ ] Implement logic
-- [ ] Export your anki to the store?
+- [x] Implement logic
 - [ ] Make an apple watch version of the app
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

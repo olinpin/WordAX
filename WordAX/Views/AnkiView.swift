@@ -9,30 +9,12 @@ import SwiftUI
 import CoreData
 
 struct AnkiView: View {
-    //    @EnvironmentObject var model: WordAXModelView
     @Environment(\.managedObjectContext) var moc
-    
-    // get flashcards to display
-    //    @FetchRequest(sortDescriptors: [
-    //        NSSortDescriptor(key: "nextSpacedRepetitionMilestone", ascending: false),
-    //        NSSortDescriptor(key: "lastSeenOn", ascending: true)
-    //    ], predicate: NSCompoundPredicate(type: .or, subpredicates: [
-    //        NSCompoundPredicate(type: .and, subpredicates: [
-    //            NSPredicate(format: "%K != nil", "lastSeenOn"),
-    //            NSPredicate(format: "lastSeenOn + nextSpacedRepetitionMilestone < %@", Date() as CVarArg)
-    //        ]),
-    //        NSPredicate(format: "lastSeenOn == nil")
-    //    ])) var flashcards: FetchedResults<Flashcard>
-    
-    // get the most recent flashcard
-    //    @FetchRequest(sortDescriptors: [],
-    //                  predicate: NSPredicate(format: "%K != nil", "lastSeenOn")) var soonestFlashcard: FetchedResults<Flashcard>
     
     @State private var timeRemaining = 10
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State var flashcards: [Flashcard] = []
-    @State var sortedFlashcards: [Flashcard] = []
-    @State var soonestFlashcard: [Flashcard] = []
+    @State var soonestFlashcards: [Flashcard] = []
     @State var showDescription = false
     
     var body: some View {
@@ -47,13 +29,13 @@ struct AnkiView: View {
                             //                    Text("How did you do?")
                             //                        .font(.subheadline)
                             //                        .foregroundStyle(.gray)
-                            ButtonHStackView(flashcard: flashcards.first!, geometry: geometry, showDescription: $showDescription)
+                            ButtonHStackView(flashcard: flashcards.first!, geometry: geometry, reload: refreshFlashcards, showDescription: $showDescription)
                                 .padding([.bottom, .trailing, .leading])
                         }
                     }
                 }
             } else {
-                if !soonestFlashcard.isEmpty {
+                if !soonestFlashcards.isEmpty {
                     Group {
                         Text("Next flashcard in: \(timeRemaining.convertDurationSecondsToCountdown())")
                             .foregroundStyle(.black)
@@ -63,15 +45,6 @@ struct AnkiView: View {
                             .clipShape(.buttonBorder)
                             .padding(.vertical, 50)
                             .padding(.horizontal)
-                            .onAppear {
-                                if !soonestFlashcard.isEmpty {
-                                    sortedFlashcards = soonestFlashcard.sorted(by: {
-                                        ($0.lastSeenOn!.addSpacedRepetitionMilestone(milestone:$0.getSpacedRepetitionMilestone()).timeIntervalSinceNow) < ($1.lastSeenOn!.addSpacedRepetitionMilestone(milestone: $1.getSpacedRepetitionMilestone()).timeIntervalSinceNow)
-                                    })
-                                    timeRemaining = Int(sortedFlashcards.first!.lastSeenOn!.addSpacedRepetitionMilestone(milestone:sortedFlashcards.first!.getSpacedRepetitionMilestone()).timeIntervalSinceNow)
-                                }
-                                refreshFlashcards()
-                            }
                             .onReceive(timer) { time in
                                 if timeRemaining > 1 {
                                     timeRemaining -= 1
@@ -103,32 +76,50 @@ struct AnkiView: View {
     }
     
     func refreshFlashcards() {
-        let request = NSFetchRequest<Flashcard>(entityName: "Flashcard")
-        request.predicate = NSCompoundPredicate(type: .or, subpredicates: [
+        let requestAllFlashcards = NSFetchRequest<Flashcard>(entityName: "Flashcard")
+        requestAllFlashcards.predicate = NSCompoundPredicate(type: .or, subpredicates: [
             NSCompoundPredicate(type: .and, subpredicates: [
                 NSPredicate(format: "%K != nil", "lastSeenOn"),
                 NSPredicate(format: "lastSeenOn + nextSpacedRepetitionMilestone < %@", Date() as CVarArg)
             ]),
             NSPredicate(format: "lastSeenOn == nil")
         ])
-        request.sortDescriptors = [
+        requestAllFlashcards.sortDescriptors = [
             NSSortDescriptor(key: "nextSpacedRepetitionMilestone", ascending: false),
             NSSortDescriptor(key: "lastSeenOn", ascending: true)
         ]
         do {
-            flashcards = try moc.fetch(request)
+            flashcards = try moc.fetch(requestAllFlashcards)
         } catch {
-            print("Something went wroooong")
+            print("Something went wrong while fetching available flashcards")
         }
         
         
         
-        let req = NSFetchRequest<Flashcard>(entityName: "Flashcard")
-        req.predicate = NSPredicate(format: "%K != nil", "lastSeenOn")
+        let requestSoonestFlashcards = NSFetchRequest<Flashcard>(entityName: "Flashcard")
+        requestSoonestFlashcards.predicate = NSPredicate(format: "%K != nil", "lastSeenOn")
         do {
-            soonestFlashcard = try moc.fetch(request)
+            soonestFlashcards = try moc.fetch(requestSoonestFlashcards)
+//            print("This is soonest flashcards")
+//            for flashcard in soonestFlashcards {
+//                print("\(flashcard.name ?? "") is \(Int(flashcard.lastSeenOn!.addSpacedRepetitionMilestone(milestone:flashcard.getSpacedRepetitionMilestone()).timeIntervalSinceNow.rounded()))")
+//            }
         } catch {
-            print("Something went bum")
+            print("Something went wrong while fetching latest flashcard")
+        }
+        if !soonestFlashcards.isEmpty {
+            soonestFlashcards = soonestFlashcards.sorted {
+                if $0.lastSeenOn != nil && $1.lastSeenOn != nil {
+                    return $0.lastSeenOn!.addSpacedRepetitionMilestone(milestone:$0.getSpacedRepetitionMilestone()).timeIntervalSinceNow < $1.lastSeenOn!.addSpacedRepetitionMilestone(milestone: $1.getSpacedRepetitionMilestone()).timeIntervalSinceNow
+                } else {
+                    return $0.lastSeenOn != nil
+                }
+            }
+            if soonestFlashcards.first!.lastSeenOn != nil {
+                timeRemaining = Int(soonestFlashcards.first!.lastSeenOn!.addSpacedRepetitionMilestone(milestone:soonestFlashcards.first!.getSpacedRepetitionMilestone()).timeIntervalSinceNow.rounded())
+            } else {
+                print("Something went wrong while getting latest flashcard")
+            }
         }
     }
 }
