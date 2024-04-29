@@ -67,6 +67,7 @@ Why settle for pricey apps when you can have WordAX? We're here to prove that ef
 - [ ] Add some animations?
 - [ ] Implement logic
 - [ ] Export your anki to the store?
+- [ ] Make an apple watch version of the app
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
