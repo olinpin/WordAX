@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct FlashCardListView: View {
-    @EnvironmentObject var model: WordAXModelView
     @State var showDescription = true
     @State var addFlashcard = false
     @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "dateAdded", ascending: false)]) var flashcards: FetchedResults<Flashcard>
@@ -34,8 +33,7 @@ struct FlashCardListView: View {
                                 
                             })
                         }
-                    }
-                    else {
+                    } else {
                         Text("You currently don't have any flashcards. To add flashcards, either click at the '+' button at the top or you can download them from the store (coming soon)")
                             .padding()
                             .background(.purple)

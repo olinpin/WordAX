@@ -45,6 +45,7 @@
 		6CEF7FA12BC88F6000E205F6 /* Flashcard+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flashcard+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6CEF7FA42BC95F0300E205F6 /* WordAX0.0.3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WordAX0.0.3.xcdatamodel; sourceTree = "<group>"; };
 		6CEF7FA52BC96F2B00E205F6 /* ButtonHStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonHStackView.swift; sourceTree = "<group>"; };
+		6CF12F1A2BDFF888000762CC /* WordAX0.0.4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WordAX0.0.4.xcdatamodel; sourceTree = "<group>"; };
 		6CF4394E2B83541D004C3543 /* WordAX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordAX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CF439512B83541D004C3543 /* WordAXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordAXApp.swift; sourceTree = "<group>"; };
 		6CF439532B83541D004C3543 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -424,12 +425,13 @@
 		6CEF7F7F2BC4694900E205F6 /* WordAXCD.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				6CF12F1A2BDFF888000762CC /* WordAX0.0.4.xcdatamodel */,
 				6CEF7FA42BC95F0300E205F6 /* WordAX0.0.3.xcdatamodel */,
 				6CEF7F9F2BC88F3900E205F6 /* WordAX0.0.2.xcdatamodel */,
 				6CEF7F962BC6B45F00E205F6 /* WordAX0.0.1.xcdatamodel */,
 				6CEF7F802BC4694900E205F6 /* WordAX.xcdatamodel */,
 			);
-			currentVersion = 6CEF7F802BC4694900E205F6 /* WordAX.xcdatamodel */;
+			currentVersion = 6CF12F1A2BDFF888000762CC /* WordAX0.0.4.xcdatamodel */;
 			path = WordAXCD.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

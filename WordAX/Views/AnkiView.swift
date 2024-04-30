@@ -126,6 +126,5 @@ struct AnkiView: View {
 
 #Preview {
     AnkiView()
-        .environmentObject(WordAXModelView())
         .environment(\.managedObjectContext, DataController.preview.container.viewContext)
 }

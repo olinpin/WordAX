@@ -24,6 +24,7 @@ extension Flashcard {
     @NSManaged public var nextSpacedRepetitionMilestone: Int64
     @NSManaged public var shown: Bool
     @NSManaged public var shownCount: Int64
+    @NSManaged public var favorite: Bool
 }
 
 extension Flashcard : Identifiable {

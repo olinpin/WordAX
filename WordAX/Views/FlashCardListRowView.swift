@@ -8,26 +8,32 @@
 import SwiftUI
 
 struct FlashCardListRowView: View {
-    @EnvironmentObject var model: WordAXModelView
-    var flashcard: Flashcard
-    @State var favorite = true
+    @State var flashcard: Flashcard
+    @State private var refresh: UUID = UUID()
     var body: some View {
         HStack {
             Group {
-                if favorite {
+                if !flashcard.favorite {
                     Image(systemName: "star")
                 } else {
                     ZStack {
                         Image(systemName: "star.fill")
                             .foregroundStyle(.yellow)
                         Image(systemName: "star")
-                            .opacity(0.4)
+                            .opacity(0)
                     }
                 }
             }
             .onTapGesture {
-                self.favorite = !self.favorite
+                flashcard.favorite.toggle()
+                do {
+                    try flashcard.managedObjectContext?.save()
+                } catch {
+                    print("Something went wrong while saving favorite cards, please try again")
+                }
+                refresh = UUID()
             }
+            .id(refresh)
             .padding(.trailing)
             VStack {
                 Text(flashcard.name ?? "Unknown")
@@ -41,7 +47,6 @@ struct FlashCardListRowView: View {
                     .lineLimit(1)
             }
         }
-        
     }
 }
 
