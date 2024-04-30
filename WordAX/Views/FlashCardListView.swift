@@ -54,7 +54,7 @@ struct FlashCardListView: View {
                 Text("Select word to get details about")
             }
             .sheet(isPresented: $addFlashcard, content: {
-                AddFlashCard(isShowing: $addFlashcard)
+                AddFlashCardView(isShowing: $addFlashcard)
             })
         }
     }

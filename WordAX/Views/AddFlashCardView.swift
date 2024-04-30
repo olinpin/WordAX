@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddFlashCard: View {
+struct AddFlashCardView: View {
     @State var text: String = ""
     @State var description: String = ""
     @Binding var isShowing: Bool
@@ -64,6 +64,6 @@ struct AddFlashCard: View {
 
 #Preview {
     @State var isShowing = true
-    return AddFlashCard(isShowing: $isShowing)
+    return AddFlashCardView(isShowing: $isShowing)
         .environment(\.managedObjectContext, DataController.preview.container.viewContext)
 }

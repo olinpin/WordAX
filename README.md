@@ -69,6 +69,8 @@ Why settle for pricey apps when you can have WordAX? We're here to prove that ef
 - [x] Implement logic
 - [ ] Make an apple watch version of the app
 - [ ] Option to add a hint
+- [ ] Delete doesn't work
+- [ ] Add haptic touch
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
