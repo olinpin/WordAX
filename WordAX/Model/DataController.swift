@@ -33,6 +33,7 @@ class DataController: ObservableObject {
             flashcard.lastSeenOn = [nil, Date(), Date().addingTimeInterval([-86400, -24000, -100000].randomElement()!)].randomElement()!
             flashcard.shownCount = [0, 1, 2, 3, 4, 5].randomElement()!
             flashcard.dateAdded = [Date(), Date().addingTimeInterval(-86400), Date().addingTimeInterval(-172800)].randomElement()!
+            flashcard.favorite = [true, false].randomElement()!
         }
         do {
             try viewContext.save()

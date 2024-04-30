@@ -10,7 +10,7 @@ import SwiftUI
 struct FlashCardListView: View {
     @State var showDescription = true
     @State var addFlashcard = false
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "dateAdded", ascending: false)]) var flashcards: FetchedResults<Flashcard>
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "favorite", ascending: false), NSSortDescriptor(key: "dateAdded", ascending: false)]) var flashcards: FetchedResults<Flashcard>
     @Environment(\.managedObjectContext) var moc
     var body: some View {
         GeometryReader { geometry in
