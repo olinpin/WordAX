@@ -72,17 +72,41 @@
 		6C4632342BC2D99E003ED0E9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				6C8185072B8B523D0033CF46 /* NextRepetitionButtonView.swift */,
-				6CEF7F512BC2DBF800E205F6 /* AddFlashCardView.swift */,
+				6CD2D7C92BE26FFB0079C4FA /* Deck */,
+				6CD2D7C82BE26FD20079C4FA /* Anki */,
+				6CD2D7C62BE26FB30079C4FA /* Flashcards */,
 				6CF439532B83541D004C3543 /* MainView.swift */,
-				6C8185092B8BA5740033CF46 /* FlashCardListView.swift */,
-				6C81850B2B8BA6BC0033CF46 /* FlashCardListRowView.swift */,
 				6C8185012B88C9FB0033CF46 /* SettingsView.swift */,
-				6C8185032B88CA210033CF46 /* AnkiView.swift */,
-				6CEF7FA52BC96F2B00E205F6 /* ButtonHStackView.swift */,
-				6C8185052B8A537F0033CF46 /* FlashCardView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		6CD2D7C62BE26FB30079C4FA /* Flashcards */ = {
+			isa = PBXGroup;
+			children = (
+				6C8185092B8BA5740033CF46 /* FlashCardListView.swift */,
+				6C81850B2B8BA6BC0033CF46 /* FlashCardListRowView.swift */,
+				6C8185052B8A537F0033CF46 /* FlashCardView.swift */,
+				6CEF7F512BC2DBF800E205F6 /* AddFlashCardView.swift */,
+			);
+			path = Flashcards;
+			sourceTree = "<group>";
+		};
+		6CD2D7C82BE26FD20079C4FA /* Anki */ = {
+			isa = PBXGroup;
+			children = (
+				6C8185032B88CA210033CF46 /* AnkiView.swift */,
+				6CEF7FA52BC96F2B00E205F6 /* ButtonHStackView.swift */,
+				6C8185072B8B523D0033CF46 /* NextRepetitionButtonView.swift */,
+			);
+			path = Anki;
+			sourceTree = "<group>";
+		};
+		6CD2D7C92BE26FFB0079C4FA /* Deck */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Deck;
 			sourceTree = "<group>";
 		};
 		6CD929862BE25B4600C2EB84 /* Deck */ = {
