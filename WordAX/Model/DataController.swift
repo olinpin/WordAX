@@ -10,7 +10,6 @@ import CoreData
 
 class DataController: ObservableObject {
     let container = NSPersistentContainer(name: "WordAXCD")
-//    static let shared = DataController()
     typealias SpacedRepetitionMilestoneEnum = Flashcard.SpacedRepetitionMilestoneEnum
     
     var viewContext: NSManagedObjectContext {
@@ -55,20 +54,6 @@ class DataController: ObservableObject {
             if let error = error {
                 print("Core data failed to load: \(error.localizedDescription)")
             }
-        }
-    }
-    
-    
-    public func getAllFlashcards(predicate: NSPredicate? = nil) -> [Flashcard]{
-        let request = NSFetchRequest<Flashcard>(entityName: "Flashcard")
-        if predicate != nil {
-            request.predicate = predicate
-        }
-        
-        do {
-            return try viewContext.fetch(request)
-        } catch {
-            return []
         }
     }
 }

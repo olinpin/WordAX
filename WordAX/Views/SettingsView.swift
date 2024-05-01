@@ -43,6 +43,5 @@ extension UTType {
 
 #Preview {
     SettingsView()
-        .environmentObject(WordAXModelView())
         .environment(\.managedObjectContext, DataController.preview.container.viewContext)
 }

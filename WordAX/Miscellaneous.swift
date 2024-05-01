@@ -1,5 +1,5 @@
 //
-//  WordAXModelView.swift
+//  Miscellaneous.swift
 //  WordAX
 //
 //  Created by Oliver Hnát on 23.02.2024.
@@ -8,28 +8,14 @@
 import Foundation
 import SwiftUI
 
-class WordAXModelView: ObservableObject {
+class Miscellaneous {
     typealias SpacedRepetitionMilestoneEnum = Flashcard.SpacedRepetitionMilestoneEnum
     
-    let settings: Settings
-    
-    init() {
+    static var dateFormatter: DateFormatter {
         let hourString = DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: NSLocale.current)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/YYYY \(hourString?.contains("a") ?? true ? "hh" : "HH"):mm\(hourString?.contains("a") ?? true ? " a" : "")"
-        self.settings = Settings(dateFormatter: dateFormatter)
-    }
-    
-    struct Settings {
-        var dateFormatter: DateFormatter
-    }
-
-    public func getFlashcards(moc: DataController) -> [Flashcard] {
-        moc.getAllFlashcards()
-    }
-    
-    public func getDateFormatter() -> DateFormatter {
-        self.settings.dateFormatter
+        return dateFormatter
     }
 }
 

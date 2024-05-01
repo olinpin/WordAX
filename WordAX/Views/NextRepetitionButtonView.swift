@@ -64,6 +64,5 @@ extension ShapeStyle where Self == Color {
 //    @State var showDescription = false
 //    let flashcard = try? DataController.preview.viewContext.fetch(Flashcard.fetchRequest()).first
 //    return NextRepetitionButtonView(buttonText: "Excellent", nextMilestone: Flashcard.SpacedRepetitionMilestoneEnum.OneDay, showDescription: $showDescription)
-//        .environmentObject(WordAXModelView())
 //        .environment(\.managedObjectContext, DataController.preview.container.viewContext)
 //}

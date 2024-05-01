@@ -44,6 +44,5 @@ struct MainView: View {
 
 #Preview {
     MainView()
-        .environmentObject(WordAXModelView())
         .environment(\.managedObjectContext, DataController.preview.container.viewContext)
 }

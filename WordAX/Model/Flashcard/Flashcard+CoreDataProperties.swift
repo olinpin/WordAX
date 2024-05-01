@@ -18,13 +18,15 @@ extension Flashcard {
 
     @NSManaged public var dateAdded: Date?
     @NSManaged public var desc: String?
+    @NSManaged public var favorite: Bool
     @NSManaged public var id: UUID?
     @NSManaged public var lastSeenOn: Date?
     @NSManaged public var name: String?
     @NSManaged public var nextSpacedRepetitionMilestone: Int64
     @NSManaged public var shown: Bool
     @NSManaged public var shownCount: Int64
-    @NSManaged public var favorite: Bool
+    @NSManaged public var deck: Deck?
+
 }
 
 extension Flashcard : Identifiable {

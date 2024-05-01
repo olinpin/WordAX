@@ -67,6 +67,5 @@ struct FlashCardListView: View {
 
 #Preview {
     FlashCardListView()
-        .environmentObject(WordAXModelView())
         .environment(\.managedObjectContext, DataController.preview.container.viewContext)
 }

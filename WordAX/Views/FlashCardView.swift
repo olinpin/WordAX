@@ -12,7 +12,6 @@ import CoreData
 struct FlashCardView: View {
     var flashcard: Flashcard
     @Binding var showDescription: Bool
-    @EnvironmentObject var model: WordAXModelView
     @Environment(\.colorScheme) var colorScheme
     
     
@@ -23,7 +22,7 @@ struct FlashCardView: View {
         VStack {
             // TODO: Figure out if this and create/edit menu could be more similar?
             if flashcard.lastSeenOn != nil {
-                Text("Last seen: " + model.getDateFormatter().string(from: flashcard.lastSeenOn!))
+                Text("Last seen: " + Miscellaneous.dateFormatter.string(from: flashcard.lastSeenOn!))
                     .font(.subheadline)
             }
             if showDescription {
@@ -56,6 +55,5 @@ struct FlashCardView: View {
     @State var showDescription = true
     let flashcard = try? DataController.preview.viewContext.fetch(Flashcard.fetchRequest()).first
     return FlashCardView(flashcard: flashcard!, showDescription: $showDescription)
-        .environmentObject(WordAXModelView())
         .environment(\.managedObjectContext, DataController.preview.container.viewContext)
 }

@@ -54,13 +54,10 @@ struct FlashCardListRowView: View {
     let flashcard = try? DataController.preview.viewContext.fetch(Flashcard.fetchRequest()).first
     return Group {
         FlashCardListRowView(flashcard: flashcard!)
-            .environmentObject(WordAXModelView())
             .environment(\.managedObjectContext, DataController.preview.container.viewContext)
         FlashCardListRowView(flashcard: flashcard!)
-            .environmentObject(WordAXModelView())
             .environment(\.managedObjectContext, DataController.preview.container.viewContext)
         FlashCardListRowView(flashcard: flashcard!)
-            .environmentObject(WordAXModelView())
             .environment(\.managedObjectContext, DataController.preview.container.viewContext)
     }
 }
