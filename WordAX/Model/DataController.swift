@@ -19,6 +19,22 @@ class DataController: ObservableObject {
     static var preview: DataController = {
         let result = DataController(inMemory: true)
         let viewContext = result.container.viewContext
+        var decks: [Deck] = []
+        var deck = Deck(context: viewContext)
+        deck.id = UUID()
+        deck.name = "This is a deck name"
+        decks.append(deck)
+        
+        deck = Deck(context: viewContext)
+        deck.id = UUID()
+        deck.name = "Another Deck"
+        decks.append(deck)
+
+        deck = Deck(context: viewContext)
+        deck.id = UUID()
+        deck.name = "Deck"
+        decks.append(deck)
+        
         for _ in 0..<10 {
             let flashcard = Flashcard(context: viewContext)
             flashcard.id = UUID()
@@ -33,6 +49,7 @@ class DataController: ObservableObject {
             flashcard.shownCount = [0, 1, 2, 3, 4, 5].randomElement()!
             flashcard.dateAdded = [Date(), Date().addingTimeInterval(-86400), Date().addingTimeInterval(-172800)].randomElement()!
             flashcard.favorite = [true, false].randomElement()!
+//            flashcard.deck = decks.randomElement()
         }
         do {
             try viewContext.save()

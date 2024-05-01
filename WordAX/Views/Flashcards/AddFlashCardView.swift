@@ -13,6 +13,9 @@ struct AddFlashCardView: View {
     @Binding var isShowing: Bool
     @Environment(\.managedObjectContext) var moc
     @FocusState private var focus: Bool
+    @FetchRequest(sortDescriptors: []) var decks: FetchedResults<Deck>
+    @State var selectedDeck: Deck?
+    @State var createDisabled: Bool = true
     var body: some View {
         NavigationStack {
             List {
@@ -20,9 +23,21 @@ struct AddFlashCardView: View {
                     TextField("Name", text: $text)
                         .focused($focus)
                     TextField("Description", text: $description, axis: .vertical)
+                    Picker("Deck", selection: $selectedDeck) {
+                        ForEach(decks) { deck in
+                            Text(deck.name ?? "Unknown deck name")
+                                .tag(deck as Deck?)
+                        }
+                    }
+                    .pickerStyle(.wheel)
                 }
                 .onAppear {
                     self.focus = true
+                }
+            }
+            .onAppear {
+                if selectedDeck == nil && !decks.isEmpty {
+                    selectedDeck = decks[0]
                 }
             }
             .toolbar {
@@ -42,6 +57,7 @@ struct AddFlashCardView: View {
                         Text("Create")
                             .bold()
                     })
+                    .disabled(text.count == 0 || description.count == 0 || selectedDeck == nil)
                 }
             }
             .navigationTitle("Add Flashcard")
@@ -57,6 +73,7 @@ struct AddFlashCardView: View {
         flashcard.lastSeenOn = nil
         flashcard.shownCount = 0
         flashcard.dateAdded = Date()
+        flashcard.deck = selectedDeck
         try? moc.save()
 
     }

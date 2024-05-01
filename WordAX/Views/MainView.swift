@@ -28,6 +28,12 @@ struct MainView: View {
                             Image(systemName: "list.bullet")
                             Text("Flashcards")
                         }
+                    DeckListView()
+                        .tag("Decks")
+                        .tabItem {
+                            Image(systemName: "rectangle.stack")
+                            Text("Decks")
+                        }
                     SettingsView()
                         .tag("Settings")
                         .tabItem {

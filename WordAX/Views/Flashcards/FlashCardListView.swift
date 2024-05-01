@@ -48,15 +48,19 @@ struct FlashCardListView: View {
                 }
                 .navigationTitle("All Flashcards")
                 .toolbar {
-                    EditButton()
-                    Button(action: {
-                        self.addFlashcard = true
-                    }) {
-                        Image(systemName: "plus")
+                    ToolbarItemGroup(placement: .topBarLeading) {
+                        EditButton()
+                    }
+                    ToolbarItemGroup(placement: .topBarTrailing) {
+                        Button(action: {
+                            self.addFlashcard = true
+                        }) {
+                            Image(systemName: "plus")
+                        }
                     }
                 }
             } detail: {
-                Text("Select word to get details about")
+                Text("Select flashcard to get details about")
             }
             .sheet(isPresented: $addFlashcard, content: {
                 AddFlashCardView(isShowing: $addFlashcard)

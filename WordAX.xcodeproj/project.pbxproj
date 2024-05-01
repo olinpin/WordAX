@@ -17,6 +17,8 @@
 		6C8185082B8B523E0033CF46 /* NextRepetitionButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8185072B8B523D0033CF46 /* NextRepetitionButtonView.swift */; };
 		6C81850A2B8BA5740033CF46 /* FlashCardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8185092B8BA5740033CF46 /* FlashCardListView.swift */; };
 		6C81850C2B8BA6BC0033CF46 /* FlashCardListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C81850B2B8BA6BC0033CF46 /* FlashCardListRowView.swift */; };
+		6CB09C2D2BE28C3E0020FE0C /* AddDeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB09C2C2BE28C3E0020FE0C /* AddDeckView.swift */; };
+		6CD2D7CB2BE270240079C4FA /* DeckListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD2D7CA2BE270240079C4FA /* DeckListView.swift */; };
 		6CEF7F522BC2DBF800E205F6 /* AddFlashCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEF7F512BC2DBF800E205F6 /* AddFlashCardView.swift */; };
 		6CEF7F7D2BC457E600E205F6 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEF7F7C2BC457E600E205F6 /* DataController.swift */; };
 		6CEF7F812BC4694900E205F6 /* WordAXCD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6CEF7F7F2BC4694900E205F6 /* WordAXCD.xcdatamodeld */; };
@@ -40,6 +42,8 @@
 		6C8185072B8B523D0033CF46 /* NextRepetitionButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRepetitionButtonView.swift; sourceTree = "<group>"; };
 		6C8185092B8BA5740033CF46 /* FlashCardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashCardListView.swift; sourceTree = "<group>"; };
 		6C81850B2B8BA6BC0033CF46 /* FlashCardListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashCardListRowView.swift; sourceTree = "<group>"; };
+		6CB09C2C2BE28C3E0020FE0C /* AddDeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeckView.swift; sourceTree = "<group>"; };
+		6CD2D7CA2BE270240079C4FA /* DeckListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckListView.swift; sourceTree = "<group>"; };
 		6CD500B52BE15F6D002BF511 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		6CEF7F512BC2DBF800E205F6 /* AddFlashCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFlashCardView.swift; sourceTree = "<group>"; };
 		6CEF7F7C2BC457E600E205F6 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
@@ -105,6 +109,8 @@
 		6CD2D7C92BE26FFB0079C4FA /* Deck */ = {
 			isa = PBXGroup;
 			children = (
+				6CB09C2C2BE28C3E0020FE0C /* AddDeckView.swift */,
+				6CD2D7CA2BE270240079C4FA /* DeckListView.swift */,
 			);
 			path = Deck;
 			sourceTree = "<group>";
@@ -260,7 +266,9 @@
 				6CF439522B83541D004C3543 /* WordAXApp.swift in Sources */,
 				6CEF7F522BC2DBF800E205F6 /* AddFlashCardView.swift in Sources */,
 				6C8184FE2B88C9580033CF46 /* WordAX.swift in Sources */,
+				6CD2D7CB2BE270240079C4FA /* DeckListView.swift in Sources */,
 				6C4A87D22BE25D260074E0A9 /* Deck+CoreDataClass.swift in Sources */,
+				6CB09C2D2BE28C3E0020FE0C /* AddDeckView.swift in Sources */,
 				6C4A87D32BE25D260074E0A9 /* Deck+CoreDataProperties.swift in Sources */,
 				6CEF7F812BC4694900E205F6 /* WordAXCD.xcdatamodeld in Sources */,
 				6C81850C2B8BA6BC0033CF46 /* FlashCardListRowView.swift in Sources */,
