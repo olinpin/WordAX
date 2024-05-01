@@ -38,7 +38,7 @@ struct SettingsView: View {
 }
 
 extension UTType {
-    public static let apkg: UTType = UTType(exportedAs: "com.wordax.apkg")
+    public static let apkg: UTType = UTType(importedAs: "com.anki.apkg")
 }
 
 #Preview {

@@ -5,25 +5,17 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleIconFiles</key>
-			<array>
-				<string>icon</string>
-			</array>
 			<key>CFBundleTypeName</key>
-			<string>APKG File</string>
+			<string>Anki File</string>
 			<key>LSHandlerRank</key>
-			<string>Default</string>
+			<string>Alternate</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.wordax.apkg</string>
+				<string>com.anki.apkg</string>
 			</array>
 		</dict>
-		<dict>
-			<key>LSHandlerRank</key>
-			<string>Default</string>
-		</dict>
 	</array>
-	<key>UTExportedTypeDeclarations</key>
+	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>
 			<key>UTTypeConformsTo</key>
@@ -31,11 +23,11 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>APKG Data</string>
+			<string>Anki File</string>
 			<key>UTTypeIconFiles</key>
 			<array/>
 			<key>UTTypeIdentifier</key>
-			<string>com.wordax.apkg</string>
+			<string>com.anki.apkg</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
