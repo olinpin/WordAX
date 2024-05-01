@@ -31,6 +31,11 @@ struct FlashCardListView: View {
                                     moc.delete(flashcard)
                                 }
                                 
+                                do {
+                                    try moc.save()
+                                } catch {
+                                    print("Something went wrong while deleting an object")
+                                }
                             })
                         }
                     } else {
