@@ -30,6 +30,7 @@ struct AddDeckView: View {
                         let deck = Deck(context: moc)
                         deck.id = UUID()
                         deck.name = name
+                        deck.dateAdded = Date()
                         do {
                             try moc.save()
                             self.isShowing = false

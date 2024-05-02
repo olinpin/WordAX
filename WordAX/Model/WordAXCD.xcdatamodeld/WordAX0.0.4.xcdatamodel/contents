@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22757" systemVersion="23D60" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="Deck" representedClassName="Deck" syncable="YES" coreSpotlightDisplayNameExpression="Deck">
+        <attribute name="dateAdded" attributeType="Date" defaultDateTimeInterval="736207200" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="name" attributeType="String"/>
+        <attribute name="name" attributeType="String" spotlightIndexingEnabled="YES"/>
         <relationship name="flashcards" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Flashcard" inverseName="deck" inverseEntity="Flashcard"/>
     </entity>
     <entity name="Flashcard" representedClassName="Flashcard" syncable="YES" coreSpotlightDisplayNameExpression="Card">
         <attribute name="dateAdded" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="desc" optional="YES" attributeType="String" spotlightIndexingEnabled="YES"/>
         <attribute name="favorite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="lastSeenOn" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String" spotlightIndexingEnabled="YES"/>
         <attribute name="nextSpacedRepetitionMilestone" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="shown" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="shownCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>

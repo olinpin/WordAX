@@ -8,14 +8,19 @@
 import SwiftUI
 
 struct DeckListView: View {
-    @FetchRequest(sortDescriptors: []) var decks: FetchedResults<Deck>
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "dateAdded", ascending: false)]) var decks: FetchedResults<Deck>
     @State var addDeck = false
     @Environment(\.managedObjectContext) var moc
+    @State var addFlashcard = false
     var body: some View {
-        NavigationSplitView {
+        NavigationStack {
             List {
                 ForEach(decks) { deck in
-                    Text(deck.name ?? "Unknown deck name")
+                    NavigationLink {
+                        FlashCardListView(deck: deck)
+                    } label: {
+                        Text(deck.name ?? "Unknown deck name")
+                    }
                 }
                 .onDelete(perform: { offsets in
                     for index in offsets {
@@ -43,8 +48,6 @@ struct DeckListView: View {
                 }
             }
             .navigationTitle("All decks")
-        } detail: {
-            Text("Select deck to get details about")
         }
         .sheet(isPresented: $addDeck, content: {
             AddDeckView(isShowing: $addDeck)

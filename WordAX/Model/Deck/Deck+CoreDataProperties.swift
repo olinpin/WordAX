@@ -18,6 +18,7 @@ extension Deck {
 
     @NSManaged public var id: UUID?
     @NSManaged public var name: String?
+    @NSManaged public var dateAdded: Date?
     @NSManaged public var flashcards: NSSet?
 
 }
