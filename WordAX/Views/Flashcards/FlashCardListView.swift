@@ -64,9 +64,6 @@ struct FlashCardListView: View {
                 .navigationBarTitle(deck?.name ?? "All Flashcards", displayMode: deck != nil ? .inline : .automatic)
                 .toolbar {
                     ToolbarItemGroup(placement: .topBarTrailing) {
-                        EditButton()
-                    }
-                    ToolbarItemGroup(placement: .topBarTrailing) {
                         Button(action: {
                             self.addFlashcard = true
                         }) {

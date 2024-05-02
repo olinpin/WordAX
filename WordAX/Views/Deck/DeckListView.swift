@@ -36,9 +36,6 @@ struct DeckListView: View {
                 })
             }
             .toolbar {
-                ToolbarItemGroup(placement: .topBarLeading) {
-                    EditButton()
-                }
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button(action: {
                         self.addDeck = true
