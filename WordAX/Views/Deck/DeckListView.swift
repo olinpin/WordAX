@@ -15,6 +15,14 @@ struct DeckListView: View {
     var body: some View {
         NavigationStack {
             List {
+                Button(action: {
+                    self.addDeck = true
+                }) {
+                    HStack {
+                        Image(systemName: "plus.circle.fill")
+                        Text("Add new deck")
+                    }
+                }
                 ForEach(decks) { deck in
                     NavigationLink {
                         FlashCardListView(deck: deck)
@@ -37,11 +45,7 @@ struct DeckListView: View {
             }
             .toolbar {
                 ToolbarItemGroup(placement: .topBarTrailing) {
-                    Button(action: {
-                        self.addDeck = true
-                    }) {
-                        Image(systemName: "plus")
-                    }
+                    EditButton()
                 }
             }
             .navigationTitle("All decks")
