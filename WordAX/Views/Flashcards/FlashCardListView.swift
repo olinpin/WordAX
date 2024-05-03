@@ -19,39 +19,41 @@ struct FlashCardListView: View {
         GeometryReader { geometry in
             NavigationStack {
                 Group {
-                    if !flashcards.isEmpty {
-                        List {
-                            ForEach(flashcards) { flashcard in
-                                NavigationLink {
-                                    FlashCardView(flashcard: flashcard, showDescription: $showDescription)
-                                } label: {
-                                    FlashCardListRowView(flashcard: flashcard)
+                    List {
+                        Button(action: {
+                            self.addFlashcard = true
+                        }) {
+                            VStack {
+                                HStack {
+                                    Image(systemName: "plus.circle.fill")
+                                        .padding(.trailing)
+                                    Text("Add new Flashcard")
                                 }
                             }
-                            .onDelete(perform: { offsets in
-                                for index in offsets {
-                                    let flashcard = flashcards[index]
-                                    moc.delete(flashcard)
-                                    flashcards.remove(at: index)
-                                }
-                                
-                                do {
-                                    try moc.save()
-                                } catch {
-                                    print("Something went wrong while deleting an object")
-                                }
-                            })
+                            .frame(maxHeight: geometry.size.height / 10)
                         }
-                    } else {
-                        Group {
-                            Text("You currently don't have any flashcards. To add flashcards, either click at the '+' button at the top or you can download them from the store (coming soon)")
-                                .padding()
-                                .background(.purple)
-                                .clipShape(.buttonBorder)
+                        ForEach(flashcards) { flashcard in
+                            NavigationLink {
+                                FlashCardView(flashcard: flashcard, showDescription: $showDescription)
+                            } label: {
+                                FlashCardListRowView(flashcard: flashcard)
+                            }
                         }
-                        .frame(maxHeight: .infinity)
-                        .padding(.horizontal)
+                        .onDelete(perform: { offsets in
+                            for index in offsets {
+                                let flashcard = flashcards[index]
+                                moc.delete(flashcard)
+                                flashcards.remove(at: index)
+                            }
+                            
+                            do {
+                                try moc.save()
+                            } catch {
+                                print("Something went wrong while deleting an object")
+                            }
+                        })
                     }
+                    .environment(\.defaultMinListRowHeight, geometry.size.height / 12)
                 }
                 .onAppear {
                     refreshFlashcards()
@@ -64,11 +66,7 @@ struct FlashCardListView: View {
                 .navigationBarTitle(deck?.name ?? "All Flashcards", displayMode: deck != nil ? .inline : .automatic)
                 .toolbar {
                     ToolbarItemGroup(placement: .topBarTrailing) {
-                        Button(action: {
-                            self.addFlashcard = true
-                        }) {
-                            Image(systemName: "plus")
-                        }
+                        EditButton()
                     }
                 }
             }
@@ -93,7 +91,7 @@ struct FlashCardListView: View {
             flashcards = []
         }
     }
-
+    
 }
 
 #Preview {
