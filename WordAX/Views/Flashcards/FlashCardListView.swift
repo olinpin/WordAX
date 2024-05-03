@@ -15,46 +15,50 @@ struct FlashCardListView: View {
     var deck: Deck?
     @Environment(\.managedObjectContext) var moc
     
+    private struct AddButton: View {
+        @Binding var addFlashcard: Bool
+        var text: String
+        var body: some View {
+            Button(action: {
+                self.addFlashcard = true
+            }) {
+                HStack {
+                    Image(systemName: "plus.circle.fill")
+                        .padding(.trailing)
+                    Text(text)
+                }
+            }
+        }
+    }
+    
     var body: some View {
         GeometryReader { geometry in
             NavigationStack {
-                Group {
-                    List {
-                        Button(action: {
-                            self.addFlashcard = true
-                        }) {
-                            VStack {
-                                HStack {
-                                    Image(systemName: "plus.circle.fill")
-                                        .padding(.trailing)
-                                    Text("Add new Flashcard")
-                                }
-                            }
-                            .frame(maxHeight: geometry.size.height / 10)
+                List {
+                    AddButton(addFlashcard: $addFlashcard, text: "Add new Flashcard")
+                        .frame(maxHeight: geometry.size.height / 10)
+                    ForEach(flashcards) { flashcard in
+                        NavigationLink {
+                            FlashCardView(flashcard: flashcard, showDescription: $showDescription)
+                        } label: {
+                            FlashCardListRowView(flashcard: flashcard, refresh: refreshFlashcards)
                         }
-                        ForEach(flashcards) { flashcard in
-                            NavigationLink {
-                                FlashCardView(flashcard: flashcard, showDescription: $showDescription)
-                            } label: {
-                                FlashCardListRowView(flashcard: flashcard)
-                            }
-                        }
-                        .onDelete(perform: { offsets in
-                            for index in offsets {
-                                let flashcard = flashcards[index]
-                                moc.delete(flashcard)
-                                flashcards.remove(at: index)
-                            }
-                            
-                            do {
-                                try moc.save()
-                            } catch {
-                                print("Something went wrong while deleting an object")
-                            }
-                        })
                     }
-                    .environment(\.defaultMinListRowHeight, geometry.size.height / 12)
+                    .onDelete(perform: { offsets in
+                        for index in offsets {
+                            let flashcard = flashcards[index]
+                            moc.delete(flashcard)
+                            flashcards.remove(at: index)
+                        }
+                        
+                        do {
+                            try moc.save()
+                        } catch {
+                            print("Something went wrong while deleting an object")
+                        }
+                    })
                 }
+                .environment(\.defaultMinListRowHeight, geometry.size.height / 12)
                 .onAppear {
                     refreshFlashcards()
                 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FlashCardListRowView: View {
     @State var flashcard: Flashcard
-    @State private var refresh: UUID = UUID()
+    var refresh: () -> ()
     var body: some View {
         HStack {
             Group {
@@ -31,9 +31,8 @@ struct FlashCardListRowView: View {
                 } catch {
                     print("Something went wrong while saving favorite cards, please try again")
                 }
-                refresh = UUID()
+                refresh()
             }
-            .id(refresh)
             .padding(.trailing)
             VStack {
                 Text(flashcard.name ?? "Unknown")
@@ -52,12 +51,14 @@ struct FlashCardListRowView: View {
 
 #Preview {
     let flashcard = try? DataController.preview.viewContext.fetch(Flashcard.fetchRequest()).first
+    func reloadPage() {
+    }
     return Group {
-        FlashCardListRowView(flashcard: flashcard!)
+        FlashCardListRowView(flashcard: flashcard!, refresh: reloadPage)
             .environment(\.managedObjectContext, DataController.preview.container.viewContext)
-        FlashCardListRowView(flashcard: flashcard!)
+        FlashCardListRowView(flashcard: flashcard!, refresh: reloadPage)
             .environment(\.managedObjectContext, DataController.preview.container.viewContext)
-        FlashCardListRowView(flashcard: flashcard!)
+        FlashCardListRowView(flashcard: flashcard!, refresh: reloadPage)
             .environment(\.managedObjectContext, DataController.preview.container.viewContext)
     }
 }
