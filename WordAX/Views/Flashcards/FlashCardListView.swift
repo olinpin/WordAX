@@ -89,7 +89,6 @@ struct FlashCardListView: View {
         }
         do {
             flashcards = try moc.fetch(request)
-            print(flashcards)
         } catch {
             print("Something went wrong while fetching the flashcards")
             flashcards = []

@@ -16,74 +16,97 @@ struct AnkiView: View {
     @State var flashcards: [Flashcard] = []
     @State var soonestFlashcards: [Flashcard] = []
     @State var showDescription = false
+    @State var decksToDisplay = Set<Deck>()
+    @State var deckViewVisible: Bool = false
+    
     
     var body: some View {
-        Group {
-            if !flashcards.isEmpty && flashcards.first != nil {
-                GeometryReader { geometry in
+        GeometryReader { geometry in
+            VStack {
+                HStack {
+                    Button {
+                        self.deckViewVisible = true
+                    } label: {
+                        Image(systemName: "rectangle.stack.fill")
+                            .padding([.leading, .top])
+                    }
+                    Spacer()
+                }
+                if !flashcards.isEmpty && flashcards.first != nil {
                     VStack {
                         if flashcards.first != nil {
                             FlashCardView(flashcard: flashcards.first!, showDescription: $showDescription)
                         }
                         if showDescription && flashcards.first != nil {
-                            //                    Text("How did you do?")
-                            //                        .font(.subheadline)
-                            //                        .foregroundStyle(.gray)
                             ButtonHStackView(flashcard: flashcards.first!, geometry: geometry, reload: refreshFlashcards, showDescription: $showDescription)
                                 .padding([.bottom, .trailing, .leading])
                         }
                     }
-                }
-            } else {
-                if !soonestFlashcards.isEmpty {
-                    Group {
-                        Text("Next flashcard in: \(timeRemaining.convertDurationSecondsToCountdown())")
+                } else {
+                    if !soonestFlashcards.isEmpty {
+                        Group {
+                            Text("Next flashcard in: \(timeRemaining.convertDurationSecondsToCountdown())")
+                                .foregroundStyle(.black)
+                                .padding()
+                                .frame(maxWidth: .infinity - 50)
+                                .background(.yellow)
+                                .clipShape(.buttonBorder)
+                                .padding(.vertical, 50)
+                                .padding(.horizontal)
+                                .onReceive(timer) { time in
+                                    if timeRemaining > 1 {
+                                        timeRemaining -= 1
+                                    }
+                                    if timeRemaining <= 3 {
+                                        refreshFlashcards()
+                                    }
+                                }
+                                .background(.gray.opacity(0.3))
+                                .clipShape(.buttonBorder)
+                                .padding(.horizontal)
+                        }
+                        .frame(maxHeight: .infinity)
+                    }
+                    else {
+                        Text("No flashcards available")
                             .foregroundStyle(.black)
                             .padding()
-                            .frame(maxWidth: .infinity - 50)
+                        //                    .frame(maxWidth: .infinity - 50)
                             .background(.yellow)
                             .clipShape(.buttonBorder)
                             .padding(.vertical, 50)
                             .padding(.horizontal)
-                            .onReceive(timer) { time in
-                                if timeRemaining > 1 {
-                                    timeRemaining -= 1
-                                }
-                                if timeRemaining <= 3 {
-                                    refreshFlashcards()
-                                }
-                            }
-                            .background(.gray.opacity(0.3))
-                            .clipShape(.buttonBorder)
-                            .padding(.horizontal)
                     }
-                }
-                else {
-                    Text("No flashcards available")
-                        .foregroundStyle(.black)
-                        .padding()
-                    //                    .frame(maxWidth: .infinity - 50)
-                        .background(.yellow)
-                        .clipShape(.buttonBorder)
-                        .padding(.vertical, 50)
-                        .padding(.horizontal)
                 }
             }
         }
         .onAppear {
             refreshFlashcards()
         }
+        .sheet(isPresented: self.$deckViewVisible) {
+            DeckSelectView(selection: $decksToDisplay, active: $deckViewVisible)
+        }
+        .onChange(of: deckViewVisible) { _ in
+            refreshFlashcards()
+        }
     }
     
     func refreshFlashcards() {
         let requestAllFlashcards = NSFetchRequest<Flashcard>(entityName: "Flashcard")
-        requestAllFlashcards.predicate = NSCompoundPredicate(type: .or, subpredicates: [
+        var predicateAllFlashcards = NSCompoundPredicate(type: .or, subpredicates: [
             NSCompoundPredicate(type: .and, subpredicates: [
                 NSPredicate(format: "%K != nil", "lastSeenOn"),
                 NSPredicate(format: "lastSeenOn + nextSpacedRepetitionMilestone < %@", Date() as CVarArg)
             ]),
             NSPredicate(format: "lastSeenOn == nil")
         ])
+        if !self.decksToDisplay.isEmpty {
+            predicateAllFlashcards = NSCompoundPredicate(type: .and, subpredicates: [
+                predicateAllFlashcards,
+                NSPredicate(format: "deck IN %@", decksToDisplay)
+            ])
+        }
+        requestAllFlashcards.predicate = predicateAllFlashcards
         requestAllFlashcards.sortDescriptors = [
             NSSortDescriptor(key: "nextSpacedRepetitionMilestone", ascending: false),
             NSSortDescriptor(key: "lastSeenOn", ascending: true)
@@ -97,13 +120,16 @@ struct AnkiView: View {
         
         
         let requestSoonestFlashcards = NSFetchRequest<Flashcard>(entityName: "Flashcard")
-        requestSoonestFlashcards.predicate = NSPredicate(format: "%K != nil", "lastSeenOn")
+        var predicateSoonestFlashcards  = NSPredicate(format: "%K != nil", "lastSeenOn")
+        if !self.decksToDisplay.isEmpty {
+            predicateSoonestFlashcards = NSCompoundPredicate(type: .and, subpredicates: [
+                predicateSoonestFlashcards,
+                NSPredicate(format: "deck IN %@", decksToDisplay)
+            ])
+        }
+        requestSoonestFlashcards.predicate = predicateSoonestFlashcards
         do {
             soonestFlashcards = try moc.fetch(requestSoonestFlashcards)
-//            print("This is soonest flashcards")
-//            for flashcard in soonestFlashcards {
-//                print("\(flashcard.name ?? "") is \(Int(flashcard.lastSeenOn!.addSpacedRepetitionMilestone(milestone:flashcard.getSpacedRepetitionMilestone()).timeIntervalSinceNow.rounded()))")
-//            }
         } catch {
             print("Something went wrong while fetching latest flashcard")
         }

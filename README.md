@@ -61,7 +61,7 @@ Why settle for pricey apps when you can have WordAX? We're here to prove that ef
 - [x] Create flashcards
 - [ ] Add tags to cards
 - [ ] Specify how often you want each card to be seen (per folder/tag?)
-- [ ] Add tags/folders
+- [x] Add tags/folders - added decks to group cards
 - [x] Store cards persistently
 	- [x] For start store them on the phone - stored using Core Data
 	- [ ] Maybe later add a storage in cloud, so that you can sync with other devices if the app is multi-platform?
@@ -70,6 +70,7 @@ Why settle for pricey apps when you can have WordAX? We're here to prove that ef
 - [ ] Make an apple watch version of the app
 - [ ] Option to add a hint
 - [ ] Add haptic touch
+- [ ] Add emoji to decks? design:)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
