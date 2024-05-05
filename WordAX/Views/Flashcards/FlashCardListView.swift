@@ -75,9 +75,15 @@ struct FlashCardListView: View {
                 }
             }
             .sheet(isPresented: $addFlashcard, content: {
-                AddFlashCardView(isShowing: $addFlashcard, selectedDeck: deck)
+                AddFlashCardView(isShowing: $addFlashcard, selectedDeck: deck, flashcard: createFlashcard())
             })
         }
+    }
+    
+    private func createFlashcard() -> Flashcard {
+        let flashcard = Flashcard(context:moc)
+        flashcard.id = UUID()
+        return flashcard
     }
     
     private func refreshFlashcards() {

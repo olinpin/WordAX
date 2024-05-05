@@ -13,6 +13,7 @@ struct FlashCardView: View {
     var flashcard: Flashcard
     @Binding var showDescription: Bool
     @Environment(\.colorScheme) var colorScheme
+    @State var editFlashcard: Bool = false
     
     
     var body: some View {
@@ -47,6 +48,16 @@ struct FlashCardView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             self.showDescription = true
+        }
+        .sheet(isPresented: $editFlashcard) {
+            AddFlashCardView(text: flashcard.name ?? "", description: flashcard.desc ?? "", isShowing: $editFlashcard, selectedDeck: flashcard.deck, flashcard: flashcard, edit: true)
+        }
+        .toolbar {
+            Button {
+                self.editFlashcard = true
+            } label: {
+                Text("Edit")
+            }
         }
     }
 }

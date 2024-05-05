@@ -16,6 +16,8 @@ struct AddFlashCardView: View {
     @FetchRequest(sortDescriptors: []) var decks: FetchedResults<Deck>
     @State var selectedDeck: Deck?
     @State var createDisabled: Bool = true
+    @State var flashcard: Flashcard
+    var edit: Bool = false
     var body: some View {
         NavigationStack {
             List {
@@ -54,7 +56,7 @@ struct AddFlashCardView: View {
                         self.createFlashcard()
                         self.isShowing = false
                     }, label: {
-                        Text("Create")
+                        Text(edit ? "Save" : "Create")
                             .bold()
                     })
                     .disabled(text.count == 0 || description.count == 0 || selectedDeck == nil)
@@ -65,15 +67,15 @@ struct AddFlashCardView: View {
     }
     
     private func createFlashcard() {
-        let flashcard = Flashcard(context: moc)
-        flashcard.id = UUID()
         flashcard.name = self.text
         flashcard.desc = self.description
-        flashcard.nextSpacedRepetitionMilestone = 0
-        flashcard.lastSeenOn = nil
-        flashcard.shownCount = 0
-        flashcard.dateAdded = Date()
         flashcard.deck = selectedDeck
+        if !edit {
+            flashcard.nextSpacedRepetitionMilestone = 0
+            flashcard.lastSeenOn = nil
+            flashcard.shownCount = 0
+            flashcard.dateAdded = Date()
+        }
         try? moc.save()
 
     }
@@ -81,6 +83,8 @@ struct AddFlashCardView: View {
 
 #Preview {
     @State var isShowing = true
-    return AddFlashCardView(isShowing: $isShowing)
+    let flashcard = Flashcard(context: DataController.preview.container.viewContext)
+    flashcard.id = UUID()
+    return AddFlashCardView(isShowing: $isShowing, flashcard: flashcard)
         .environment(\.managedObjectContext, DataController.preview.container.viewContext)
 }
