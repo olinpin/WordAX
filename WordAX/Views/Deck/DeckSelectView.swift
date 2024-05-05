@@ -13,17 +13,10 @@ struct DeckSelectView: View {
     @Binding var active: Bool
     var body: some View {
         NavigationStack {
-            List(decks) { deck in
-                DeckRowView(deck: deck, selected: selection.contains(deck))
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        if !selection.contains(deck) {
-                            self.selection.insert(deck)
-                        } else {
-                            self.selection.remove(deck)
-                        }
-                    }
+            List(decks, id:\.self, selection: $selection) { deck in
+                DeckRowView(deck: deck)
             }
+            .environment(\.editMode, .constant(EditMode.active))
             .toolbar {
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button(action: {

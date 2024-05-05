@@ -48,6 +48,7 @@ public class Flashcard: NSManagedObject {
     }
     
     func getSpacedRepetitionMilestone() -> SpacedRepetitionMilestoneEnum {
-        SpacedRepetitionMilestoneEnum.getMilestoneFromInt(value: self.nextSpacedRepetitionMilestone)
+        var milestone = SpacedRepetitionMilestoneEnum.getMilestoneFromInt(value: self.nextSpacedRepetitionMilestone)
+        return milestone == .Now ? .TenMinutes : milestone
     }
 }
