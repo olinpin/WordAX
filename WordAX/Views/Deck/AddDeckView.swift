@@ -11,8 +11,16 @@ struct AddDeckView: View {
     @Binding var isShowing: Bool
     @Environment(\.managedObjectContext) var moc
     @State var name: String = ""
-    var deck: Deck
-    var edit: Bool = false
+    @State var deck: Deck?
+    var edit: Bool
+    
+    init(isShowing: Binding<Bool>, deck: Deck? = nil) {
+        self._isShowing = isShowing
+        self._name = State(initialValue: deck?.name ?? "")
+        self.deck = deck
+        self.edit = deck != nil
+    }
+    
     var body: some View {
         NavigationStack {
             List {
@@ -29,13 +37,19 @@ struct AddDeckView: View {
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button(action: {
-                        deck.name = name
-                        deck.dateAdded = Date()
+                        if let existingDeck = deck {
+                            existingDeck.name = name
+                        } else {
+                            let currentDeck = Deck(context: moc)
+                            currentDeck.id = UUID()
+                            currentDeck.dateAdded = Date()
+                            currentDeck.name = name
+                        }
                         do {
                             try moc.save()
                             self.isShowing = false
                         } catch {
-                           print("Something went wrong while saving the deck")
+                            print("Something went wrong while saving the deck")
                         }
                     }, label: {
                         Text(edit ? "Edit": "Create")
@@ -44,7 +58,7 @@ struct AddDeckView: View {
                     .disabled(name.isEmpty)
                 }
             }
-            .navigationTitle("Add Deck")
+            .navigationTitle(edit ? "Edit Deck" : "Add Deck")
         }
     }
 }

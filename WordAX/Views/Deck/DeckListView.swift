@@ -13,13 +13,11 @@ struct DeckListView: View {
     @Environment(\.managedObjectContext) var moc
     @State var editDeck: Bool = false
     @State var deckToEdit: Deck?
-    @State var createdDeck: Deck?
     var body: some View {
         NavigationStack {
             List {
                 Button(action: {
                     self.addDeck = true
-                    self.createdDeck = createDeck()
                 }) {
                     HStack {
                         Image(systemName: "plus.circle.fill")
@@ -66,22 +64,14 @@ struct DeckListView: View {
             }
             .navigationTitle("All decks")
         }
-        .onAppear {
-            print(decks.count)
-        }
         .sheet(isPresented: Binding(get: {editDeck}, set: {editDeck = $0})) {
-            AddDeckView(isShowing: $editDeck, name: deckToEdit?.name ?? "", deck: deckToEdit ?? createDeck(), edit: deckToEdit != nil)
+            AddDeckView(isShowing: $editDeck, deck: deckToEdit)
         }
         .sheet(isPresented: $addDeck, content: {
-            AddDeckView(isShowing: $addDeck, deck: createdDeck ?? createDeck())
+            AddDeckView(isShowing: $addDeck)
         })
     }
     
-    func createDeck() -> Deck {
-        let deck = Deck(context: moc)
-        deck.id = UUID()
-        return deck
-    }
 }
 
 #Preview {
