@@ -11,12 +11,15 @@ struct DeckListView: View {
     @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "dateAdded", ascending: false)]) var decks: FetchedResults<Deck>
     @State var addDeck = false
     @Environment(\.managedObjectContext) var moc
-    @State var addFlashcard = false
+    @State var editDeck: Bool = false
+    @State var deckToEdit: Deck?
+    @State var createdDeck: Deck?
     var body: some View {
         NavigationStack {
             List {
                 Button(action: {
                     self.addDeck = true
+                    self.createdDeck = createDeck()
                 }) {
                     HStack {
                         Image(systemName: "plus.circle.fill")
@@ -24,10 +27,23 @@ struct DeckListView: View {
                     }
                 }
                 ForEach(decks) { deck in
-                    NavigationLink {
-                        FlashCardListView(deck: deck)
-                    } label: {
-                        Text(deck.name ?? "Unknown deck name")
+                    HStack {
+                        Button {
+                            deckToEdit = deck
+                            editDeck = true
+                        } label: {
+                            Image(systemName: "pencil")
+                                .contentShape(Rectangle())
+                                .foregroundStyle(.blue)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        
+                        NavigationLink {
+                            FlashCardListView(deck: deck)
+                        } label: {
+                            Text(deck.name ?? "Unknown deck name")
+                        }
+                        .contentShape(Rectangle())
                     }
                 }
                 .onDelete(perform: { offsets in
@@ -50,9 +66,21 @@ struct DeckListView: View {
             }
             .navigationTitle("All decks")
         }
+        .onAppear {
+            print(decks.count)
+        }
+        .sheet(isPresented: Binding(get: {editDeck}, set: {editDeck = $0})) {
+            AddDeckView(isShowing: $editDeck, name: deckToEdit?.name ?? "", deck: deckToEdit ?? createDeck(), edit: deckToEdit != nil)
+        }
         .sheet(isPresented: $addDeck, content: {
-            AddDeckView(isShowing: $addDeck)
+            AddDeckView(isShowing: $addDeck, deck: createdDeck ?? createDeck())
         })
+    }
+    
+    func createDeck() -> Deck {
+        let deck = Deck(context: moc)
+        deck.id = UUID()
+        return deck
     }
 }
 
