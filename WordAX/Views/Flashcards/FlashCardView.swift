@@ -14,11 +14,12 @@ struct FlashCardView: View {
     @Binding var showDescription: Bool
     @Environment(\.colorScheme) var colorScheme
     @State var editFlashcard: Bool = false
-    
+    @State var showHint: Bool = false
     
     var body: some View {
         let flashcardText = Text(flashcard.name ?? "Unknown")
             .font(.title)
+            .textSelection(.enabled)
             .bold()
         VStack {
             // TODO: Figure out if this and create/edit menu could be more similar?
@@ -33,7 +34,6 @@ struct FlashCardView: View {
                         .padding(.bottom)
                 }
                 flashcardText
-                    .textSelection(.enabled)
                 Divider()
                     .background(colorScheme == .light ? Color.black : Color.white)
                     .padding(.horizontal)
@@ -41,6 +41,21 @@ struct FlashCardView: View {
                     .multilineTextAlignment(.center)
             } else {
                 flashcardText
+            }
+            if flashcard.hint != nil {
+                if !showDescription {
+                    Button {
+                        showHint.toggle()
+                    } label: {
+                        Text(showHint ? "Hide Hint" : "Show Hint")
+                            .padding()
+                    }
+                    if showHint {
+                        Text((flashcard.hint != nil) ? "Hint: \(flashcard.hint ?? "")" : "")
+                            .padding()
+                            .font(.footnote)
+                    }
+                }
             }
         }
         .padding([.horizontal, .top])
@@ -63,7 +78,7 @@ struct FlashCardView: View {
 }
 
 #Preview {
-    @State var showDescription = true
+    @State var showDescription = false
     let flashcard = try? DataController.preview.viewContext.fetch(Flashcard.fetchRequest()).first
     return FlashCardView(flashcard: flashcard!, showDescription: $showDescription)
         .environment(\.managedObjectContext, DataController.preview.container.viewContext)

@@ -86,7 +86,7 @@ struct AnkiView: View {
         .sheet(isPresented: self.$deckViewVisible) {
             DeckSelectView(selection: $decksToDisplay, active: $deckViewVisible)
         }
-        .onChange(of: deckViewVisible) { _ in
+        .onChange(of: deckViewVisible) {
             refreshFlashcards()
         }
     }

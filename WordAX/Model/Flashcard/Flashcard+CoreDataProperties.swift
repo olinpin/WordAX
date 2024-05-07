@@ -26,6 +26,7 @@ extension Flashcard {
     @NSManaged public var shown: Bool
     @NSManaged public var shownCount: Int64
     @NSManaged public var deck: Deck?
+    @NSManaged public var hint: String?
 
 }
 

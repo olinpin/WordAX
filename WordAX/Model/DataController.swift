@@ -53,6 +53,7 @@ class DataController: ObservableObject {
             flashcard.dateAdded = [Date(), Date().addingTimeInterval(-86400), Date().addingTimeInterval(-172800)].randomElement()!
             flashcard.favorite = [true, false].randomElement()!
             flashcard.deck = decks.randomElement()
+            flashcard.hint = ["This is a small hint", "Hint", "This is a very long hint that maybe should be even longer olorem ipsum to cover everything but I don't know what else to write Lorem Ipsum", "This is something in between hint that doesn'coveres the mid cases Lorem Ipsujm Lor"].randomElement()
         }
         do {
             try viewContext.save()
