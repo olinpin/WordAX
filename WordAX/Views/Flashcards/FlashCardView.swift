@@ -42,20 +42,20 @@ struct FlashCardView: View {
             } else {
                 flashcardText
             }
-            if flashcard.hint != nil {
-                if !showDescription {
-                    Button {
-                        showHint.toggle()
-                    } label: {
-                        Text(showHint ? "Hide Hint" : "Show Hint")
-                            .padding()
-                    }
-                    if showHint {
-                        Text((flashcard.hint != nil) ? "Hint: \(flashcard.hint ?? "")" : "")
-                            .padding()
-                            .font(.footnote)
-                    }
+            if !showDescription && flashcard.hint != nil {
+                if showHint {
+                    Text((flashcard.hint != nil) ? "Hint: \(flashcard.hint ?? "")" : "")
+                        .padding()
+                        .font(.footnote)
+                } else {
                 }
+                Button {
+                    showHint.toggle()
+                } label: {
+                    Text(showHint ? "Hide Hint" : "Show Hint")
+                        .padding()
+                }
+//                .disabled(flashcard.hint == nil)
             }
         }
         .padding([.horizontal, .top])

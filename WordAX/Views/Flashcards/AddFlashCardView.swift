@@ -17,6 +17,7 @@ struct AddFlashCardView: View {
     @State var selectedDeck: Deck?
     @State var createDisabled: Bool = true
     @State var flashcard: Flashcard
+    @State var hint: String = ""
     var edit: Bool = false
     var body: some View {
         NavigationStack {
@@ -25,6 +26,10 @@ struct AddFlashCardView: View {
                     TextField("Name", text: $text)
                         .focused($focus)
                     TextField("Description", text: $description, axis: .vertical)
+                    TextField("Hint", text: $hint, axis: .vertical)
+                        .lineLimit(3, reservesSpace: true)
+                }
+                Section(header: Text("Deck details")) {
                     Picker("Deck", selection: $selectedDeck) {
                         ForEach(decks) { deck in
                             Text(deck.name ?? "Unknown deck name")
@@ -70,6 +75,7 @@ struct AddFlashCardView: View {
         flashcard.name = self.text
         flashcard.desc = self.description
         flashcard.deck = selectedDeck
+        flashcard.hint = self.hint
         if !edit {
             flashcard.nextSpacedRepetitionMilestone = 0
             flashcard.lastSeenOn = nil
